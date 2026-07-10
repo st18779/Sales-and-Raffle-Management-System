@@ -1,0 +1,36 @@
+<div class="basket-container">
+  <div class="basket-header">
+    <h2 class="basket-title">הסל שלי ✨</h2>
+    <div class="basket-divider"></div>
+  </div>
+
+  <div class="basket-items-list">
+    @for(item of basket$ | async; track item.giftId){
+      <div class="basket-card">
+        <div class="item-details">
+          <span class="item-name">{{item.giftName}}</span>
+          <span class="item-price">כרטיסים: {{item.totalTickets}}</span>
+        </div>
+        
+        <div class="item-controls">
+          <button class="control-btn plus" (click)="add(item.giftId)">+</button>
+          <span class="ticket-count">{{item.totalTickets}}</span>
+          <button class="control-btn minus" (click)="remove(item.giftId)">-</button>
+        </div>
+      </div>
+    } @empty {
+      <div class="empty-basket">
+        <p>הסל ריק... <br> מחכה למתנות שלך 🎁</p>
+      </div>
+    }
+  </div>
+
+  <div class="basket-footer">
+    <div class="total-summary">
+      <span>סה"כ לתשלום:</span>
+      <span class="total-amount">₪--</span> </div>
+    <a [routerLink]="['/gifts/checkOut']" class="checkout-btn">
+      מעבר לתשלום 
+    </a>
+  </div>
+</div>

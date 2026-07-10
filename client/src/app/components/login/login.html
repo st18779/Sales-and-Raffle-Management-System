@@ -1,0 +1,16 @@
+<h1>התחברות</h1>
+<form>
+  <div>
+    <label for="email">אימייל:</label>
+    <input type="email" id="email" required  [(ngModel)]="email" name="email" />
+      <p *ngIf="showEmailError" class="error-text">כתובת מייל לא תקינה</p>
+  </div>
+  <div>
+    <label for="password">סיסמה:</label>
+    <input type="password" id="password" required [(ngModel)]="password"  name="password" />
+      <p *ngIf="showPasswordError" class="error-text">על הסיסמה להכיל לפחות 8 תווים</p>
+  </div>
+  <button type="submit" (click)="Login()">התחבר</button>
+ 
+  <p *ngIf="showErrorLogin">לא נמצא משתמש כזה במערכת, נסה שוב</p>
+</form>

@@ -1,0 +1,33 @@
+ <nav class="main-nav">
+   <div class="logo">המכירה הסינית 🎁</div>
+   <div class="links">
+    <a routerLink="">דף הבית</a>
+    @if(!isUserLoggedIn){
+      <a routerLink="login" routerLinkActive="active-route">התחברות</a>
+      <a routerLink="register" routerLinkActive="active-route">הרשמה</a>
+    }
+    @if(isUserLoggedIn){
+      <a routerLink="gifts" routerLinkActive="active-route">רשימת מתנות</a>
+    
+    @if(isAdmin){
+      <a routerLink="gifts/add" routerLinkActive="active-route">הוספת מתנה</a>
+      <a routerLink="donors" routerLinkActive="active-route">רשימת תורמים</a>
+      <a routerLink="donors/add" routerLinkActive="active-route">הוספת תורם</a>
+     }
+     @if(isUserLoggedIn && !isAdmin){
+      <a [routerLink]="['/basket', user.id]">הסל שלי 🛒</a>    
+     }
+
+    <button (click)="logOut()">התנתקות</button>
+    }
+    </div>
+  
+ </nav>
+<main class="main" dir="rtl">
+         
+   <router-outlet />  
+     @if(isUserLoggedIn && !isAdmin){
+      <app-basket [curUserId]="user.id"></app-basket>
+      }
+</main>
+

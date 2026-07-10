@@ -1,0 +1,35 @@
+
+<form class="payment-box">
+  <h1> תשלום </h1>
+  
+  <div class="credit-card-form">
+    <div class="form-group">
+      <label for="cardNumber">מספר כרטיס:</label>
+      <input type="text" id="cardNumber" placeholder="**** **** **** ****" minlength="16" maxlength="16" required>
+    </div>
+
+    <div class="row">
+      <div class="form-group col">
+        <label for="expiry">תוקף (MM/YY):</label>
+        <input type="text" id="expiry" placeholder="MM/YY" pattern="(0[1-9]|1[0-2])\/\d{2}" maxlength="5" required>
+      </div>
+
+      <div class="form-group col">
+        <label for="cvv">3 ספרות על גב הכרטיס:</label>
+        <input type="text" id="cvv" placeholder="3 ספרות" minlength="3" maxlength="3" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="idNumber">תעודת זהות בעל הכרטיס:</label>
+      <input type="text" id="idNumber" placeholder="מספר זהות" minlength="9" maxlength="9" required>
+    </div>
+
+    <div class="total-price"> סה"כ לתשלום: {{ totalPrice$ | async }} ₪</div>
+    <button (click)="checkOut()" class="pay-button">אישור ותשלום</button>
+  </div>
+  
+</form>
+
+<p *ngIf="showCheckOutError" class="error-msg">אירעה שגיאה במהלך התשלום. נסה שוב מאוחר יותר</p>
+

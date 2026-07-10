@@ -1,0 +1,68 @@
+<div class="page-wrapper">
+  <div class="form-card">
+    <div class="form-header">
+      <div class="icon-circle">🎁</div>
+      <h3>{{ isNew ? 'הוספת מתנה חדשה' : 'עריכת מתנה' }}</h3>
+      <p class="subtitle">מלא את הפרטים כדי להציג את המתנה בקטלוג</p>
+    </div>
+
+    <form class="gift-form">
+      <div class="form-grid">
+     
+        <div class="input-group">
+          <label for="name">שם המתנה</label>
+          <input [(ngModel)]="curGift.name" name="name" type="text" placeholder="לדוגמה: חופשה חלומית" required>
+        </div>
+
+        
+        <div class="input-group">
+          <label for="price">מחיר כרטיס (₪)</label>
+          <input type="number" [(ngModel)]="curGift.price" name="price" placeholder="0.00" required>
+        </div>
+
+       
+        <div class="input-group">
+          <label>קטגוריה</label>
+          <select [(ngModel)]="curGift.categoryId" name="categoryId" required>
+            <option [ngValue]="null" disabled selected>בחר קטגוריה...</option>
+            <option *ngFor="let c of categories$ | async" [ngValue]="c.id">{{c.name}}</option>
+          </select>
+        </div>
+
+       
+        <div class="input-group">
+          <label>תורם</label>
+          <select [(ngModel)]="curGift.donorId" name="donorId">
+            <option [ngValue]="null" disabled selected>בחר תורם...</option>
+            <option *ngFor="let d of donors$ | async " [ngValue]="d.id">{{d.name}}</option>
+          </select>
+        </div>
+      </div>
+
+      
+      <div class="input-group full-width">
+        <label for="imageUrl">כתובת תמונה (URL)</label>
+        <input type="text" [(ngModel)]="curGift.imageUrl" name="imageUrl" placeholder="https://example.com/image.jpg" required>
+      </div>
+
+     
+      <div class="input-group full-width">
+        <label for="description">תיאור המתנה</label>
+        <textarea [(ngModel)]="curGift.description" name="description" rows="3" placeholder="ספר קצת על המתנה..."></textarea>
+      </div>
+
+
+      <div class="form-actions">
+        <button type="button" class="cancel-btn" routerLink="/gifts">ביטול</button>
+        <button type="button" class="save-btn" (click)="saveGift()">
+          {{ isNew ? 'צור מתנה עכשיו' : 'עדכן פרטים' }}
+        </button>
+      </div>
+
+      <div class="error-messages">
+        <p *ngIf="showErrorCreate" class="error-badge">⚠️ שגיאה ביצירת המתנה. וודא שכל השדות מלאים.</p>
+        <p *ngIf="showErrorUpdate" class="error-badge">⚠️ שגיאה בעדכון הפרטים. נסה שנית.</p>
+      </div>
+    </form>
+  </div>
+</div>

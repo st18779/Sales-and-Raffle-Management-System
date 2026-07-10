@@ -1,0 +1,62 @@
+<div class="gifts-page-wrapper">
+
+  <div class="header-section">
+    <h1 class="page-title">קטלוג המתנות שלנו ✨</h1>
+    <button *ngIf="isAdmin"  class="admin-add-btn"  [routerLink]="['/gifts', 'add']" class="save-btn">  + הוספת מתנה חדשה</button>
+  </div>
+  
+
+  <div class="gifts-grid">
+
+    
+    <div *ngFor="let gift of giftsList$ | async"
+         class="gift-card"
+         [class.is-winner]="gift.isRandomized">
+
+      
+      <div class="image-wrapper">
+        <img [src]="gift.imageUrl" [alt]="gift.name" class="gift-image">
+        <div class="price-badge">{{ gift.price }} ₪</div>
+      </div>
+
+  
+      <div class="gift-content">
+        <!-- <h3 class="gift-name">{{ gift.name }}</h3> -->
+        <a class="gift-name" [routerLink]="['/gifts', gift.id]">{{ gift.name }}</a>
+        <p class="gift-description">{{ gift.description }}</p>
+
+      
+        <div *ngIf="gift.isRandomized" class="winner-box">
+          <div class="winner-badge">🏆 הזוכה המאושר!</div>
+          <p><strong>{{ gift.winnerUser?.fullName }}</strong></p>
+          <p class="winner-contact">{{ gift.winnerUser.phone }}</p>
+        </div>
+
+       
+        <div class="action-buttons">
+          
+          <button *ngIf="!isAdmin"
+                  [disabled]="gift.isRandomized"
+                  class="buy-btn"
+                  (click)="add(gift.id)">
+            {{ gift.isRandomized ? 'ההגרלה הסתיימה' : 'הוספה לסל 🛒' }}
+          </button>
+
+         
+          <div *ngIf="isAdmin" class="admin-actions">
+            <button [disabled]="gift.isRandomized" class="icon-btn edit" [routerLink]="['edit', gift.id]" title="עריכה">✏️</button>
+            <button [disabled]="gift.isRandomized" class="icon-btn delete" (click)="deleteGift(gift.id)" title="מחיקה">🗑️</button>
+            <button class="draw-btn" [disabled]="gift.isRandomized" (click)="random(gift.id)">
+               {{ gift.isRandomized ? 'בוצעה הגרלה' : 'בצע הגרלה ✨' }}
+            </button>
+          </div>
+        </div>
+
+   
+        <p class="error-text" *ngIf="showErrorOnDelete && isAdmin">
+          שגיאה: המתנה בשימוש ולא ניתנת למחיקה.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="donors-container">
+  <a routerLink="add" class="add-btn">הוספת תורם חדש +</a>
+
+  <table>
+    <thead>
+      <tr>
+        <th>שם</th>
+        <th>אימייל</th>
+        <th>פעולות</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let donor of donorsList$ | async">
+        <td>{{ donor.name }}</td>
+        <td>{{ donor.email }}</td>
+        <td class="actions">
+          <a [routerLink]="['edit', donor.id]" class="edit-btn">עריכה</a>
+          <button (click)="deleteDonor(donor.id)" class="delete-btn">מחיקה</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

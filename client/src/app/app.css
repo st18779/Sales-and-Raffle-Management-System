@@ -1,0 +1,95 @@
+:host-context(app-home) .main {
+  padding-top: 0;
+}
+
+.main-nav {
+  position: fixed;
+  top: 0;
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+  font-family: 'Assistant', sans-serif;
+}
+
+.logo {
+  font-size: 1.8rem; /* גודל פונט גדול יותר */
+  font-weight: bold;
+  color: #8a6d3b;
+}
+
+.links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.links a {
+  text-decoration: none;
+  color: #5d4d33;
+  font-weight: 600;
+  font-size: 1.1rem; /* גודל פונט גדול יותר */
+  transition: color 0.3s, background-color 0.3s;
+  padding: 8px 15px; /* הוספת מרווחים פנימיים */
+  border-radius: 10px; /* פינות מעוגלות */
+}
+
+/* כאשר הקישור פעיל */
+.links a.active-route {
+  background-color: #d4af37; /* רקע צהוב בהיר */
+  color: white; /* טקסט בהיר */
+  font-weight: 700; /* הדגשה של הטקסט */
+  border-radius: 20px; /* עיגול יותר רחב לקישורים פעילים */
+}
+
+/* אפקט Hover לקישורים */
+.links a:hover {
+  background-color: #f0e6d2; /* צבע רקע בהיר */
+  color: #8a6d3b; /* צבע טקסט כהה יותר */
+}
+
+button {
+  background: transparent;
+  border: 1px solid #8a6d3b;
+  color: #8a6d3b;
+  padding: 8px 20px; /* הגדלת המרווחים */
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1.1rem; /* גודל פונט יותר גדול */
+  transition: all 0.3s;
+}
+
+button:hover {
+  background: #8a6d3b;
+  color: white;
+}
+
+app-basket {
+  position: fixed;
+  top: 100px;
+  left: 20px;
+  width: 280px;
+  height: calc(100vh - 120px);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: -5px 5px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  z-index: 900;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+app-basket h2 {
+  color: #8a6d3b;
+  font-family: 'Assistant', sans-serif;
+  border-bottom: 2px solid #d4af37;
+  padding-bottom: 10px;
+  text-align: center;
+}

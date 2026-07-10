@@ -1,0 +1,45 @@
+<div class="page-container" *ngIf="curGift">
+  
+  <!-- כרטיס פרטי המתנה -->
+  <div class="gift-detail-card">
+    
+    <!-- תמונה + קטגוריה -->
+    <div class="image-section">
+      <img [src]="curGift.imageUrl" [alt]="curGift.name" class="main-gift-image">
+      <div class="category-tag">{{curGift.categoryName}}</div>
+    </div>
+
+    <!-- מידע נוסף על המתנה -->
+    <div class="info-section">
+      <!-- כפתור חזרה לקטלוג -->
+      <button class="back-btn" routerLink="/gifts">→ חזרה לקטלוג</button>
+      
+      <!-- שם המתנה -->
+      <h1 class="gift-title">{{curGift.name}}</h1>
+      
+      <!-- שם התורם -->
+      <p class="donor-name">בחסות: <span>{{curGift.donorName}}</span></p>
+      
+      <div class="divider"></div>
+
+      <!-- תיאור המתנה -->
+      <div class="description-container">
+        <h3>על המתנה:</h3>
+        <p>{{curGift.description}}</p>
+      </div>
+
+      <!-- מחיר המתנה -->
+      <div class="price-container">
+        <span class="price-label">מחיר כרטיס:</span>
+        <span class="price-value">{{curGift.price}} ₪</span>
+      </div>
+
+      <!-- כפתור הוספה לסל -->
+      <div class="action-area">
+        <button class="add-to-cart-btn">הוספה לסל הרכישות ✨</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>

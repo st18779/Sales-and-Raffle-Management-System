@@ -1,0 +1,134 @@
+
+.basket-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.6); 
+  backdrop-filter: blur(12px);
+  border-right: 1px solid rgba(212, 175, 55, 0.3); 
+  padding: 25px;
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.05);
+}
+
+.basket-title {
+  color: #8a6d3b;
+  font-family: 'Assistant', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.basket-divider {
+  height: 2px;
+  background: linear-gradient(to left, transparent, #d4af37, transparent);
+  margin-bottom: 25px;
+}
+
+
+.basket-items-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+
+.basket-card {
+  background: white;
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.basket-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(138, 109, 59, 0.1);
+}
+
+.item-name {
+  display: block;
+  font-weight: 700;
+  color: #5d4d33;
+  font-size: 1.1rem;
+}
+
+.item-price {
+  font-size: 0.9rem;
+  color: #8a6d3b;
+}
+
+
+.item-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fdfaf3;
+  padding: 5px 10px;
+  border-radius: 25px;
+  border: 1px solid #e2d1b1;
+}
+
+.control-btn {
+  background: none;
+  border: none;
+  color: #8a6d3b;
+  font-weight: bold;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.control-btn:hover {
+  color: #d4af37;
+}
+
+.ticket-count {
+  font-weight: bold;
+  color: #5d4d33;
+  min-width: 20px;
+  text-align: center;
+}
+
+
+.basket-footer {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(138, 109, 59, 0.2);
+}
+
+.total-summary {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #5d4d33;
+}
+
+.total-amount {
+  color: #8a6d3b;
+  font-size: 1.2rem;
+}
+
+.checkout-btn {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #8a6d3b, #d4af37);
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 800;
+  box-shadow: 0 4px 15px rgba(138, 109, 59, 0.3);
+  transition: all 0.3s;
+}
+
+.checkout-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(138, 109, 59, 0.4);
+}
