@@ -1,4 +1,4 @@
-# Raffle and-Sales-Management-System
+# Sales and Raffle Management System
 
 
 ## What is this project?
