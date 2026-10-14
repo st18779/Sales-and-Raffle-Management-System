@@ -1,4 +1,5 @@
-# ChineseSale
+# Raffle-Sales-Management-System
+
 
 ChineseSale is a web application for managing a gift raffle. Users can browse gifts, add tickets to a basket, and check out. Administrators can manage gifts, donors, and categories, and access raffle and sales operations.
 
