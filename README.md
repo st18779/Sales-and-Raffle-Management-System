@@ -1,64 +1,70 @@
-# Raffle-Sales-Management-System
+# Raffle-Sales-and Management-System
 
 
-ChineseSale is a web application for managing a gift raffle. Users can browse gifts, add tickets to a basket, and check out. Administrators can manage gifts, donors, and categories, and access raffle and sales operations.
+## What is this project?
 
-## Project Components
+ChineseSale is a website for running a gift raffle. A visitor can look through the gifts, choose gifts to enter, and check out their basket. An administrator can maintain the gift, donor, and category information and draw raffle winners.
 
-- `client/` is an Angular 20 single-page application. It includes registration and login, gift browsing and search, donor listings, a basket, and checkout flows.
-- `server/` is an ASP.NET Core 8 Web API. It uses Entity Framework Core 8 with SQL Server, JWT authentication, role-based authorization, Swagger, request logging, and rate limiting.
-- `docker-compose.yml` starts the client, API, and SQL Server. SQL Server data is stored in the `sql_data` Docker volume.
+In short: the website is the part people use, the API is the part that processes their requests, and SQL Server stores the information.
 
-The database contains users, donors, gifts, categories, and purchases. On startup, the API checks for pending EF Core migrations and attempts to apply them automatically.
+## What can people do?
 
-## Requirements
+- **Visitors and signed-in users:** browse and search gifts, view donors, add gift entries to a basket, and check out.
+- **Administrators:** manage gifts, donors, and categories, and use raffle and sales reports. These actions require an account with the Admin role.
 
-For the containerized setup, install Docker Desktop (or Docker Engine) with the Compose plugin.
+## Start the whole project
 
-For local development without containerizing the client/API, install:
-
-- .NET 8 SDK
-- Node.js 20 or later and npm
-- SQL Server, either locally or via Docker
-
-## Run with Docker Compose
-
-From the repository root, run:
+The easiest way to try the project is with Docker Compose. Install Docker Desktop, open a terminal in the project folder, and run:
 
 ```bash
 docker compose up --build
 ```
 
-Open the Angular application at [http://localhost:4200](http://localhost:4200). The API is available at [http://localhost:8088](http://localhost:8088), and Swagger UI is at [http://localhost:8088/swagger](http://localhost:8088/swagger).
+The first run may take a few minutes while Docker downloads and builds the required software. When it is running, open:
 
-Stop the services with `Ctrl+C`, or run `docker compose down` in another terminal. The database volume is retained. To delete the database data as well, run `docker compose down --volumes`; this is destructive and cannot be undone.
+- **Website:** [http://localhost:4200](http://localhost:4200)
+- **API documentation:** [http://localhost:8088/swagger](http://localhost:8088/swagger)
 
-The Compose configuration currently contains development database credentials. Replace them before using the project beyond local development, and keep the API connection string in sync with the SQL Server password.
+The API documentation is mainly useful to developers; visitors can use the website. To stop the project, press `Ctrl+C` in the terminal. The database is kept for the next run. To remove the database and all saved data too, run `docker compose down --volumes` from the project folder. This permanently deletes that data.
 
-## Run Locally
+The Compose file includes development database credentials so the project can run locally. They are not production credentials and must be replaced before deployment or sharing the service publicly.
 
-Start SQL Server first. To use the SQL Server service from Compose, start only the database from the repository root:
+## What is included?
+
+- `client/` - the website, built with Angular.
+- `server/` - the API, built with ASP.NET Core. It handles sign-in, gift and donor information, baskets, checkout, and raffle operations.
+- SQL Server - the database that stores users, gifts, donors, categories, and purchases.
+- `docker-compose.yml` - starts the website, API, and database together.
+
+When the API starts, it checks whether the database needs updates and attempts to apply them automatically.
+
+## Run parts separately (development)
+
+This section is for developers who want to run or change the website and API separately. You need Docker, .NET 8 SDK, and Node.js 20 or later with npm.
+
+### 1. Start the database
+
+From the project folder, run:
 
 ```bash
 docker compose up -d db
 ```
 
-The API's default connection string is in `server/appsettings.json`; update it to match your local database. Also replace the JWT signing key with a sufficiently long, private value. Configuration can be supplied through .NET environment variables rather than the settings file. In PowerShell, for example:
+### 2. Start the API
+
+The API reads its database connection and token-signing key from `server/appsettings.json`. Set these to private values suitable for your local machine before starting the API. You can provide them in PowerShell without putting them in the source file:
 
 ```powershell
 $env:ConnectionStrings__DefaultConnection = "Server=localhost,1433;Database=ChineseSale;User Id=sa;Password=<your-sql-password>;TrustServerCertificate=True;Encrypt=False;"
 $env:JwtSettings__SecretKey = "<your-private-signing-key>"
-```
-
-In a terminal at the repository root, run the API:
-
-```powershell
 dotnet run --project server --launch-profile http
 ```
 
-The HTTP launch profile listens on `http://localhost:5080` and opens Swagger. The Angular services currently use the fixed API base URL `http://localhost:8088/api`, and the API's CORS policy allows `http://localhost:4200`. For local client/API development, either keep the API reachable at port 8088 and the client at port 4200, or update those client service URLs and the API CORS origin to match your chosen ports.
+The API's local HTTP address is `http://localhost:5080`. The website's current configuration sends API requests to port `8088`, so the simplest way to run the entire application is the Docker Compose method above. If you run the website and API separately, update the website's API address to match the API port and allow the website's address in the API's CORS configuration.
 
-In a second terminal, install and run the client:
+### 3. Start the website
+
+Open a second terminal:
 
 ```powershell
 cd client
@@ -66,55 +72,57 @@ npm ci
 npm start
 ```
 
-Open [http://localhost:4200](http://localhost:4200). Angular rebuilds the app when source files change.
+Then open [http://localhost:4200](http://localhost:4200). The website refreshes as you change its source files.
 
-## Common Commands
+## Developer reference
 
-Run these from the indicated directory:
+### Main API areas
+
+All API addresses start with `/api`. For example, `/api/Gift/giftsList` returns the gift list.
+
+| API area | What it handles |
+| --- | --- |
+| `/api/Auth` | Registering and signing in |
+| `/api/Gift` | Browsing, searching, and managing gifts; drawing winners |
+| `/api/Category` | Viewing and managing gift categories |
+| `/api/Donor` | Viewing and managing donors |
+| `/api/Purchases` | Baskets, checkout, and sales reports |
+| `/api/User` | User records |
+
+The complete list of requests and their data formats is available in Swagger at [http://localhost:8088/swagger](http://localhost:8088/swagger) when using Docker Compose. Requests marked for administrators require a valid sign-in token and the Admin role.
+
+### Common commands
+
+Run each command from the directory shown:
 
 | Task | Command | Directory |
 | --- | --- | --- |
-| Start client | `npm start` | `client/` |
-| Build client | `npm run build` | `client/` |
-| Run client unit tests | `npm test` | `client/` |
-| Build API | `dotnet build server.csproj` | `server/` |
-| Start all services | `docker compose up --build` | repository root |
+| Start the website | `npm start` | `client/` |
+| Build the website | `npm run build` | `client/` |
+| Run website tests | `npm test` | `client/` |
+| Build the API | `dotnet build server.csproj` | `server/` |
+| Start all services | `docker compose up --build` | project folder |
 
-The Angular unit tests use Karma/Jasmine. The repository does not currently include a separate .NET test project.
+Website tests use Karma and Jasmine. There is no separate .NET test project in the repository.
 
-## API Overview
+### Configuration and security
 
-All API routes use the `/api` prefix. The main route groups are:
+- Database settings are read from `ConnectionStrings:DefaultConnection`. Token settings are read from `JwtSettings` in `server/appsettings.json`.
+- The API currently allows website requests from `http://localhost:4200` only.
+- The Compose setup enables the API's development documentation and uses plain HTTP for local development.
+- Do not use the credentials or signing key from local configuration for a public or production deployment. Use private secrets and a production-ready configuration.
+- API logs are written to the terminal and to daily files under `server/Logs/`.
 
-| Route | Purpose |
-| --- | --- |
-| `/api/Auth` | Register and log in (`POST /register`, `POST /login`) |
-| `/api/Gift` | List, search, sort, and retrieve gifts; create, update, delete, and draw winners |
-| `/api/Category` | List and retrieve categories; create, update, and delete categories |
-| `/api/Donor` | List, search, and retrieve donors; create, update, and delete donors |
-| `/api/Purchases` | Basket operations, checkout, and purchase reporting |
-| `/api/User` | Retrieve and manage user records |
-
-For example, `GET /api/Gift/giftsList` lists gifts and `GET /api/Category/categoriesList` lists categories. Consult Swagger for request/response schemas and the complete route list. Endpoints decorated with `[Authorize(Roles = "Admin")]` require a JWT for a user with the `Admin` role; Swagger includes a Bearer authorization option. The Angular routes for gifts and donors also use a client-side login guard.
-
-## Configuration and Security
-
-- The API reads the SQL Server connection string from `ConnectionStrings:DefaultConnection` and JWT options from `JwtSettings` (`SecretKey`, `Issuer`, `Audience`, and `ExpiryMinutes`). Environment variables use double underscores, for example `JwtSettings__SecretKey`.
-- The API's CORS policy currently permits only `http://localhost:4200`.
-- Compose sets the API to Development, enables Swagger, and disables HTTPS redirection for local HTTP use.
-- Treat all credentials currently present in configuration files as development-only. Use private environment-specific configuration or a secret manager for real deployments; do not commit production database passwords or JWT signing keys.
-- The API writes logs to the console and rolling files under `server/Logs/`.
-
-## Repository Layout
+### Folder guide
 
 ```text
-client/                 Angular application
-server/Controllers/     HTTP API endpoints
-server/Data/            Entity Framework database context
-server/DTOs/            API request and response models
-server/Models/          Database entities
-server/Repositories/    Data access implementations
-server/Services/        Application logic and token service
-server/Migrations/      Entity Framework Core migrations
-docker-compose.yml      Local client, API, and SQL Server services
+client/                 Website
+server/Controllers/     API request handlers
+server/Data/            Database setup
+server/DTOs/            Data sent to and from the API
+server/Models/          Database records
+server/Repositories/    Database access
+server/Services/        Application behavior
+server/Migrations/      Database update history
+docker-compose.yml      Local startup configuration
 ```
