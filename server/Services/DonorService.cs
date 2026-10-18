@@ -85,7 +85,7 @@ namespace server.Services
                     CategoryName = gift.Category?.Name ?? string.Empty,
                     DonorName = donor.Name,
                     ImageUrl = gift.ImageUrl ?? string.Empty,
-                    WinnerUser = gift.WinnerUser
+                    WinnerUser = DTOs.GiftDTOs.WinnerDto.From(gift.WinnerUser)
                 }).ToList() ?? new List<DTOs.GiftDTOs.GiftResponseDto>()
             };
         }

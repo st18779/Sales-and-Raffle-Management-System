@@ -6,11 +6,12 @@ import { tap } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { User } from '../../models/User.model';
 import { PurchasesService } from '../../services/purchases.service';
+import { ImgFallback } from '../../core/img-fallback.directive';
 
 
 @Component({
   selector: 'app-gifts-list',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, ImgFallback],
   templateUrl: './gifts-list.html',
   styleUrl: './gifts-list.css',
 })

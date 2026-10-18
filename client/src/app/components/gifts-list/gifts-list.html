@@ -15,7 +15,7 @@
 
       
       <div class="image-wrapper">
-        <img [src]="gift.imageUrl" [alt]="gift.name" class="gift-image">
+        <img [src]="gift.imageUrl" [alt]="gift.name" class="gift-image" appImgFallback>
         <div class="price-badge">{{ gift.price }} ₪</div>
       </div>
 

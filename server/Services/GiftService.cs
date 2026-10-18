@@ -133,7 +133,7 @@ namespace server.Services
                 IsRandomized = gift.IsRandomized || false,
                 CategoryName = gift.Category?.Name ?? string.Empty,
                 DonorName = gift.Donor?.Name ?? string.Empty,
-                WinnerUser = gift.WinnerUser ?? null,
+                WinnerUser = WinnerDto.From(gift.WinnerUser),
                 ImageUrl = gift.ImageUrl ?? string.Empty,
             };
         }

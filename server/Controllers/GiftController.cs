@@ -108,16 +108,16 @@ namespace server.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost("randomWinner")]
-        public async Task<ActionResult<UserResponseDto>> RandomWinner([FromBody] int id)
+        public async Task<ActionResult<WinnerDto>> RandomWinner([FromBody] int id)
         {
             try
             {
                 var winnerUser = await _giftService.RandomWinner(id);
-                return Ok(winnerUser);
+                return Ok(WinnerDto.From(winnerUser));
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(new { message = ex.Message });
             }
         }
 

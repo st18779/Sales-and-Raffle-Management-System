@@ -3,10 +3,11 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { GiftService } from '../../services/gift.service';
 import { Gift } from '../../models/Gift.model';
 import { CommonModule } from '@angular/common';
+import { ImgFallback } from '../../core/img-fallback.directive';
 
 @Component({
   selector: 'app-single-gift',
-  imports: [RouterLink,CommonModule],
+  imports: [RouterLink,CommonModule,ImgFallback],
   templateUrl: './single-gift.html',
   styleUrl: './single-gift.css',
 })

@@ -12,7 +12,10 @@ export class AuthService {
 
    http: HttpClient = inject(HttpClient);
    router: Router = inject(Router);
-   constructor(){ }
+   constructor(){
+    // טוקן שפג תוקפו מכניסה קודמת - לא מציגים את המשתמש כמחובר
+    if (!this.hasValidToken()) this.clearSession();
+   }
    private userSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('user') || 'null'));
 
    user$ = this.userSubject.asObservable();
@@ -34,11 +37,28 @@ export class AuthService {
       ) 
    
   }
+  // האם יש טוקן שעדיין בתוקף (לפי שדה exp בטוקן)
+  hasValidToken(): boolean {
+    const token = localStorage.getItem('token');
+    if (!token) return false;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+      return typeof payload.exp === 'number' && payload.exp * 1000 > Date.now();
+    } catch {
+      return false; // טוקן פגום
+    }
+  }
+
+  // מוחק את פרטי ההתחברות בלי לנווט
+  clearSession() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.userSubject.next(null);
+  }
+
   logout() {
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
-  this.userSubject.next(null);
-  this.router.navigate(['/login']);
-}
+    this.clearSession();
+    this.router.navigate(['/login']);
+  }
 
 }

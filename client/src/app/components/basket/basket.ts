@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { PurchasesService } from '../../services/purchases.service';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -26,6 +26,10 @@ export class Basket implements OnInit, OnChanges {
   @Input()
   curUserId!: string;
 
+  // מודיע לאפליקציה כשהסל נפתח/נסגר כדי להזיז את תוכן העמוד הצידה
+  @Output()
+  openChange = new EventEmitter<boolean>();
+
   ngOnInit() {
     if (this.curUserId) {
       this.purchasesService.loadBasket(this.curUserId);
@@ -38,8 +42,13 @@ export class Basket implements OnInit, OnChanges {
     }
   }
 
-  toggle() { this.isOpen = !this.isOpen; }
-  close() { this.isOpen = false; }
+  toggle() { this.setOpen(!this.isOpen); }
+  close() { this.setOpen(false); }
+
+  private setOpen(open: boolean) {
+    this.isOpen = open;
+    this.openChange.emit(open);
+  }
 
   add(giftId: number) {
     this.purchasesService.addGiftToBasket(this.curUserId, giftId).subscribe();

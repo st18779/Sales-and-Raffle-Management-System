@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using server.Interfaces;
 using static server.DTOs.UserDto;
@@ -5,6 +6,7 @@ using static server.DTOs.UserDto;
 namespace server.Controllers
 {
 
+    [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
@@ -51,10 +53,10 @@ namespace server.Controllers
                 var createdUser = await _userService.CreateUser(user);
                 if (createdUser == null)
                     return BadRequest(new { message = $"User with ID {user.Id} already exists!" });
-                return Ok(user);
+                return Ok(createdUser);
             }
-            catch(Exception ex){
-                return BadRequest(ex);
+            catch(Exception){
+                return BadRequest(new { message = "Could not create user." });
             }
         }
 

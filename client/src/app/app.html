@@ -23,11 +23,11 @@
     </div>
   
  </nav>
-<main class="main" dir="rtl">
-         
-   <router-outlet />  
+<main class="main" dir="rtl" [class.basket-open]="basketOpen">
+
+   <router-outlet />
      @if(isUserLoggedIn && !isAdmin){
-      <app-basket [curUserId]="user.id"></app-basket>
+      <app-basket [curUserId]="user.id" (openChange)="basketOpen = $event"></app-basket>
       }
 </main>
 

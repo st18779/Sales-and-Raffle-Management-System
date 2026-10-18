@@ -15,6 +15,7 @@ export class App {
 
   isAdmin: boolean = false;
   isUserLoggedIn: boolean = false;
+  basketOpen: boolean = false;
   user= new User()
   private authService = inject(AuthService);
   
@@ -22,7 +23,8 @@ export class App {
       this.authService.user$.subscribe(userData => {
       this.isUserLoggedIn = !!userData;
       this.user = userData || new User();
-      this.isAdmin = userData?.isAdmin || false; 
+      this.isAdmin = userData?.isAdmin || false;
+      if (!userData) this.basketOpen = false;
     });
   
   }

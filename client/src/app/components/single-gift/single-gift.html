@@ -5,7 +5,7 @@
     
     <!-- תמונה + קטגוריה -->
     <div class="image-section">
-      <img [src]="curGift.imageUrl" [alt]="curGift.name" class="main-gift-image">
+      <img [src]="curGift.imageUrl" [alt]="curGift.name" class="main-gift-image" appImgFallback>
       <div class="category-tag">{{curGift.categoryName}}</div>
     </div>
 

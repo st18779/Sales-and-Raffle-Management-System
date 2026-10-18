@@ -15,8 +15,18 @@ namespace server.DTOs
             public string CategoryName { get; set; } = string.Empty;
             public string DonorName { get; set; } = string.Empty;
             public string ImageUrl { get; set; } = string.Empty;
-            public User? WinnerUser { get; set; } = null;
+            public WinnerDto? WinnerUser { get; set; } = null;
 
+        }
+
+        // Public info about a raffle winner - never expose the full User entity (it contains the password)
+        public class WinnerDto
+        {
+            public string FullName { get; set; } = string.Empty;
+            public string Phone { get; set; } = string.Empty;
+
+            public static WinnerDto? From(User? user) =>
+                user == null ? null : new WinnerDto { FullName = user.FullName, Phone = user.Phone };
         }
 
         public class GiftCreateDto
