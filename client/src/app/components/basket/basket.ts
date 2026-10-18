@@ -1,10 +1,8 @@
 import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { PurchasesService } from '../../services/purchases.service';
-import { User } from '../../models/User.model';
-import { ActivatedRoute, RouterLink } from "@angular/router";
+import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { BasketModel } from '../../models/BasketModel.model'
-import { map, Observable } from 'rxjs';
+import { map } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -14,24 +12,25 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './basket.css',
 })
 export class Basket implements OnInit, OnChanges {
-  purchasesService: PurchasesService = inject(PurchasesService)
-  private activatedRoute = inject(ActivatedRoute);
+  purchasesService: PurchasesService = inject(PurchasesService);
   basket$ = this.purchasesService.basket$;
   totalPrice$ = this.purchasesService.totalPrice$;
 
-  @Input()
-  curUserId!: string
+  // סך כל הכרטיסים בסל - להצגה בתג על הכפתור
+  itemCount$ = this.basket$.pipe(
+    map(items => (items ?? []).reduce((sum, i) => sum + i.totalTickets, 0))
+  );
 
+  isOpen = false;
+
+  @Input()
+  curUserId!: string;
 
   ngOnInit() {
-    console.log(this.basket$);
-
     if (this.curUserId) {
       this.purchasesService.loadBasket(this.curUserId);
     }
-    
   }
-
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['curUserId'] && this.curUserId) {
@@ -39,14 +38,14 @@ export class Basket implements OnInit, OnChanges {
     }
   }
 
+  toggle() { this.isOpen = !this.isOpen; }
+  close() { this.isOpen = false; }
 
   add(giftId: number) {
     this.purchasesService.addGiftToBasket(this.curUserId, giftId).subscribe();
   }
 
   remove(giftId: number) {
-    this.purchasesService.removeGiftFromBasket(this.curUserId, giftId).subscribe()
+    this.purchasesService.removeGiftFromBasket(this.curUserId, giftId).subscribe();
   }
-
-
 }

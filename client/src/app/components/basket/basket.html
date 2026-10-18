@@ -1,26 +1,44 @@
-<div class="basket-container">
+<!-- הכפתור הצף -->
+<button class="basket-fab" (click)="toggle()" aria-label="פתיחת הסל">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0 0 20 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+  </svg>
+  @if (itemCount$ | async; as count) {
+    <span class="fab-badge">{{ count }}</span>
+  }
+</button>
+
+<!-- רקע שנלחץ כדי לסגור -->
+@if (isOpen) {
+  <div class="basket-backdrop" (click)="close()"></div>
+}
+
+<!-- הפאנל -->
+<aside class="basket-panel" [class.open]="isOpen">
   <div class="basket-header">
     <h2 class="basket-title">הסל שלי ✨</h2>
-    <div class="basket-divider"></div>
+    <button class="close-btn" (click)="close()" aria-label="סגירה">✕</button>
   </div>
+  <div class="basket-divider"></div>
 
   <div class="basket-items-list">
-    @for(item of basket$ | async; track item.giftId){
+    @for (item of basket$ | async; track item.giftId) {
       <div class="basket-card">
         <div class="item-details">
-          <span class="item-name">{{item.giftName}}</span>
-          <span class="item-price">כרטיסים: {{item.totalTickets}}</span>
+          <span class="item-name">{{ item.giftName }}</span>
+          <span class="item-price">כרטיסים: {{ item.totalTickets }}</span>
         </div>
-        
+
         <div class="item-controls">
-          <button class="control-btn plus" (click)="add(item.giftId)">+</button>
-          <span class="ticket-count">{{item.totalTickets}}</span>
-          <button class="control-btn minus" (click)="remove(item.giftId)">-</button>
+          <button class="control-btn" (click)="add(item.giftId)" aria-label="הוספה">+</button>
+          <span class="ticket-count">{{ item.totalTickets }}</span>
+          <button class="control-btn" (click)="remove(item.giftId)" aria-label="הסרה">−</button>
         </div>
       </div>
     } @empty {
       <div class="empty-basket">
-        <p>הסל ריק... <br> מחכה למתנות שלך 🎁</p>
+        <span class="empty-icon">🎁</span>
+        <p>הסל ריק<br>מחכה למתנות שלך</p>
       </div>
     }
   </div>
@@ -28,9 +46,10 @@
   <div class="basket-footer">
     <div class="total-summary">
       <span>סה"כ לתשלום:</span>
-      <span class="total-amount">₪--</span> </div>
-    <a [routerLink]="['/gifts/checkOut']" class="checkout-btn">
-      מעבר לתשלום 
+      <span class="total-amount">₪{{ (totalPrice$ | async) ?? 0 }}</span>
+    </div>
+    <a [routerLink]="['/gifts/checkOut']" class="checkout-btn" (click)="close()">
+      מעבר לתשלום
     </a>
   </div>
-</div>
+</aside>
