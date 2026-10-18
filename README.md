@@ -1,4 +1,5 @@
-# ChineseSale
+# Sales and Raffle Management System
+
 
 ## What is this project?
 
