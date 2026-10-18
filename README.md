@@ -14,7 +14,15 @@ In short: the website is the part people use, the API is the part that processes
 
 ## Start the whole project
 
-The easiest way to try the project is with Docker Compose. Install Docker Desktop, open a terminal in the project folder, and run:
+The easiest way to try the project is with Docker Compose. Install Docker Desktop and open a terminal in the project folder.
+
+First, create your private settings file. Copy `.env.example` to `.env` and replace the example values with your own database password and token-signing key (see the comments in the file for the rules). `.env` is ignored by git and must never be committed.
+
+```bash
+cp .env.example .env
+```
+
+Then run:
 
 ```bash
 docker compose up --build
@@ -27,7 +35,7 @@ The first run may take a few minutes while Docker downloads and builds the requi
 
 The API documentation is mainly useful to developers; visitors can use the website. To stop the project, press `Ctrl+C` in the terminal. The database is kept for the next run. To remove the database and all saved data too, run `docker compose down --volumes` from the project folder. This permanently deletes that data.
 
-The Compose file includes development database credentials so the project can run locally. They are not production credentials and must be replaced before deployment or sharing the service publicly.
+SQL Server only uses `MSSQL_SA_PASSWORD` when the database volume is first created. If you change it later, either change the `sa` password inside SQL Server as well, or (deleting all data) run `docker compose down --volumes`.
 
 ## What is included?
 
@@ -52,11 +60,11 @@ docker compose up -d db
 
 ### 2. Start the API
 
-The API reads its database connection and token-signing key from `server/appsettings.json`. Set these to private values suitable for your local machine before starting the API. You can provide them in PowerShell without putting them in the source file:
+The database connection and token-signing key are not stored in `server/appsettings.json`; the API will not start without them. Provide them as environment variables, using the same values as in your `.env`:
 
 ```powershell
-$env:ConnectionStrings__DefaultConnection = "Server=localhost,1433;Database=ChineseSale;User Id=sa;Password=<your-sql-password>;TrustServerCertificate=True;Encrypt=False;"
-$env:JwtSettings__SecretKey = "<your-private-signing-key>"
+$env:ConnectionStrings__DefaultConnection = "Server=localhost,1433;Database=ChineseSale;User Id=sa;Password=<MSSQL_SA_PASSWORD from .env>;TrustServerCertificate=True;Encrypt=False;"
+$env:JwtSettings__SecretKey = "<JWT_SECRET_KEY from .env>"
 dotnet run --project server --launch-profile http
 ```
 
@@ -107,7 +115,7 @@ Website tests use Karma and Jasmine. There is no separate .NET test project in t
 
 ### Configuration and security
 
-- Database settings are read from `ConnectionStrings:DefaultConnection`. Token settings are read from `JwtSettings` in `server/appsettings.json`.
+- Secrets live only in the git-ignored `.env` file (template: `.env.example`). Docker Compose passes them to the API as `ConnectionStrings__DefaultConnection` and `JwtSettings__SecretKey`. Non-secret token settings (`Issuer`, `Audience`, `ExpiryMinutes`) stay in `server/appsettings.json`.
 - The API currently allows website requests from `http://localhost:4200` only.
 - The Compose setup enables the API's development documentation and uses plain HTTP for local development.
 - Do not use the credentials or signing key from local configuration for a public or production deployment. Use private secrets and a production-ready configuration.
