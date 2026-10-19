@@ -2,7 +2,6 @@
 
   <div class="header-section">
     <h1 class="page-title">קטלוג המתנות שלנו ✨</h1>
-    <button *ngIf="isAdmin"  class="admin-add-btn"  [routerLink]="['/gifts', 'add']" class="save-btn">  + הוספת מתנה חדשה</button>
   </div>
   
 
@@ -14,15 +13,14 @@
          [class.is-winner]="gift.isRandomized">
 
       
-      <div class="image-wrapper">
+      <div class="image-wrapper" [routerLink]="['/gifts', gift.id]">
         <img [src]="gift.imageUrl" [alt]="gift.name" class="gift-image" appImgFallback>
         <div class="price-badge">{{ gift.price }} ₪</div>
       </div>
 
   
       <div class="gift-content">
-        <!-- <h3 class="gift-name">{{ gift.name }}</h3> -->
-        <a class="gift-name" [routerLink]="['/gifts', gift.id]">{{ gift.name }}</a>
+        <h3 class="gift-name">{{ gift.name }}</h3>
         <p class="gift-description">{{ gift.description }}</p>
 
       

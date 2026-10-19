@@ -36,7 +36,12 @@
 
       <!-- כפתור הוספה לסל -->
       <div class="action-area">
-        <button class="add-to-cart-btn">הוספה לסל הרכישות ✨</button>
+        @if (curGift.isRandomized) {
+          <p class="winner-text">🏆 ההגרלה הסתיימה. הזוכה: <strong>{{ curGift.winnerUser?.fullName }}</strong></p>
+        } @else if (!isAdmin) {
+          <button class="add-to-cart-btn" (click)="addToBasket()">הוספה לסל הרכישות ✨</button>
+          @if (errorMessage) { <p class="error-text">{{ errorMessage }}</p> }
+        }
       </div>
     </div>
 

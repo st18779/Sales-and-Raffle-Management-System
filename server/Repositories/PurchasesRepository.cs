@@ -63,13 +63,15 @@ namespace server.Repositories
 
         public async Task<bool> CheckOut(string userId)
         {
-            var users = await _context.purchases
-                            .Where(p => p.UserId == userId)
+            // רק הסל הפתוח - לא נוגעים ברכישות שכבר שולמו
+            var basket = await _context.purchases
+                            .Where(p => p.UserId == userId && !p.IsClosed)
                             .ToListAsync();
-            if(!users.Any())
+            if(!basket.Any())
                 return false;
-            foreach (var user in users) {
-                user.IsClosed = true;
+            foreach (var purchase in basket) {
+                purchase.IsClosed = true;
+                purchase.PurchaseDate = DateTime.Now;
             }
             await _context.SaveChangesAsync();
             return true;

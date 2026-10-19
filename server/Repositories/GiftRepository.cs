@@ -27,6 +27,7 @@ namespace server.Repositories
             return await _context.Gifts
                 .Include(g => g.Category)
                 .Include(g => g.Donor)
+                .Include(g => g.WinnerUser)
                 .FirstOrDefaultAsync(g => g.Id == id);
         }
 

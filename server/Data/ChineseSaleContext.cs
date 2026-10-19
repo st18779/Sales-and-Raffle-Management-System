@@ -52,7 +52,7 @@ namespace server.Data
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.NumOfTickets).IsRequired();
                 entity.Property(e => e.IsClosed).IsRequired();
-                entity.Property(e => e.PurchaseDate).IsRequired().HasDefaultValue(DateTime.Now.Date);
+                entity.Property(e => e.PurchaseDate).IsRequired().HasDefaultValueSql("GETDATE()");
             });
 
 

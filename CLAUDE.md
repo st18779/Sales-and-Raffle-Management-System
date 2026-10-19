@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ChineseSale: a gift-raffle site. Angular 20 client (`client/`), ASP.NET Core 8 Web API (`server/`), SQL Server 2022. Visitors browse gifts/donors, fill a basket and check out; Admin-role users manage gifts, donors, categories, view sales reports and draw raffle winners.
 
+The full functional requirements (in Hebrew) are in [PROJECT_REQUIREMENTS.md](PROJECT_REQUIREMENTS.md). The document calls the management role "manager"; the code uses `"Admin"` (`[Authorize(Roles = "Admin")]`) — this is intentional, keep `Admin`.
+
 ## Commands
 
 | Task | Command | Directory |
