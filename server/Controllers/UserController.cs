@@ -66,7 +66,7 @@ namespace server.Controllers
             var user = await _userService.DeleteUser(id);
             if(!user)
                 return NotFound(new { message = $"User with ID {id} does not exist!" });
-            return Ok("Deleted!");
+            return Ok(new { message = "Deleted!" });
         }
 
         [HttpPut("{id}")]

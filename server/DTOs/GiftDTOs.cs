@@ -13,7 +13,9 @@ namespace server.DTOs
             public int Price { get; set; }
             public bool IsRandomized { get; set; } = false;
             public string CategoryName { get; set; } = string.Empty;
+            public int? CategoryId { get; set; }
             public string DonorName { get; set; } = string.Empty;
+            public string DonorId { get; set; } = string.Empty;
             public string ImageUrl { get; set; } = string.Empty;
             public WinnerDto? WinnerUser { get; set; } = null;
 
@@ -37,10 +39,10 @@ namespace server.DTOs
             [MaxLength(20)]
             public string Name { get; set; } = string.Empty;
             [Required]
-            [MaxLength(50)]
+            [MaxLength(70)]
             public string Description { get; set; } = string.Empty;
             [Required]
-            [AllowedValues(10,50,ErrorMessage = "A ticket price can be only 10 or 50")]
+            [Range(1, 100, ErrorMessage = "A ticket price must be a whole number between 1 and 100")]
             public int Price { get; set; }
             [Required]
             public int CategoryId { get; set; }
@@ -57,10 +59,10 @@ namespace server.DTOs
             [MaxLength(20)]
             public string Name { get; set; } = string.Empty;
             
-            [MaxLength(50)]
+            [MaxLength(70)]
             public string Description { get; set; } = string.Empty;
-            
-            [AllowedValues(10, 50, ErrorMessage = "A ticket price can be only 10 or 50")]
+
+            [Range(1, 100, ErrorMessage = "A ticket price must be a whole number between 1 and 100")]
             public int? Price { get; set; }
             
             public int? CategoryId { get; set; }

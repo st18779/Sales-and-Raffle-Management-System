@@ -11,13 +11,15 @@
      
         <div class="input-group">
           <label for="name">שם המתנה</label>
-          <input [(ngModel)]="curGift.name" name="name" type="text" placeholder="לדוגמה: חופשה חלומית" required>
+          <input [(ngModel)]="curGift.name" name="name" type="text" placeholder="לדוגמה: חופשה חלומית" required maxlength="20">
+          <small class="hint">{{ curGift.name?.length || 0 }}/20 תווים</small>
         </div>
 
         
         <div class="input-group">
           <label for="price">מחיר כרטיס (₪)</label>
-          <input type="number" [(ngModel)]="curGift.price" name="price" placeholder="0.00" required>
+          <input type="number" [(ngModel)]="curGift.price" name="price" placeholder="1–100" required min="1" max="100" step="1">
+          <small class="hint">מספר שלם בין 1 ל-100</small>
         </div>
 
        
@@ -32,7 +34,7 @@
        
         <div class="input-group">
           <label>תורם</label>
-          <select [(ngModel)]="curGift.donorId" name="donorId">
+          <select [(ngModel)]="curGift.donorId" name="donorId" required>
             <option [ngValue]="null" disabled selected>בחר תורם...</option>
             <option *ngFor="let d of donors$ | async " [ngValue]="d.id">{{d.name}}</option>
           </select>
@@ -48,7 +50,8 @@
      
       <div class="input-group full-width">
         <label for="description">תיאור המתנה</label>
-        <textarea [(ngModel)]="curGift.description" name="description" rows="3" placeholder="ספר קצת על המתנה..."></textarea>
+        <textarea [(ngModel)]="curGift.description" name="description" rows="3" placeholder="ספר קצת על המתנה..." required maxlength="70"></textarea>
+        <small class="hint">{{ curGift.description?.length || 0 }}/70 תווים</small>
       </div>
 
 
@@ -60,8 +63,7 @@
       </div>
 
       <div class="error-messages">
-        <p *ngIf="showErrorCreate" class="error-badge">⚠️ שגיאה ביצירת המתנה. וודא שכל השדות מלאים.</p>
-        <p *ngIf="showErrorUpdate" class="error-badge">⚠️ שגיאה בעדכון הפרטים. נסה שנית.</p>
+        <p *ngIf="errorMessage" class="error-badge">⚠️ {{ errorMessage }}</p>
       </div>
     </form>
   </div>

@@ -7,7 +7,7 @@ namespace server.Interfaces
         Task<Donor?> GetDonorById(string id);
         Task<IEnumerable<Donor>> GetDonorsList();
         Task<IEnumerable<Donor>> SearchDonorsByname(string name);
-        Task<bool> DeleteDonor(string id);
+        Task<DeleteResult> DeleteDonor(string id);
         Task<Donor?> CreateDonor(Donor donor);
         Task<Donor?> UpdateDonor(Donor donor);
 

@@ -79,7 +79,7 @@ namespace server.Services
             return MapToResponseDto(createdGift);
         }
 
-        public async Task<bool> DeleteGift(int id)
+        public async Task<DeleteResult> DeleteGift(int id)
         {
             return await _giftRepository.DeleteGift(id);
         }
@@ -132,7 +132,9 @@ namespace server.Services
                 Price = gift.Price,
                 IsRandomized = gift.IsRandomized || false,
                 CategoryName = gift.Category?.Name ?? string.Empty,
+                CategoryId = gift.CategoryId,
                 DonorName = gift.Donor?.Name ?? string.Empty,
+                DonorId = gift.DonorId,
                 WinnerUser = WinnerDto.From(gift.WinnerUser),
                 ImageUrl = gift.ImageUrl ?? string.Empty,
             };

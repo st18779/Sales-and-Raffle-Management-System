@@ -15,7 +15,8 @@
         <td>{{ donor.email }}</td>
         <td class="actions">
           <a [routerLink]="['edit', donor.id]" class="edit-btn">עריכה</a>
-          <button (click)="deleteDonor(donor.id)" class="delete-btn">מחיקה</button>
+          <button (click)="deleteDonor(donor.id)" class="delete-btn" [disabled]="deleting.has(donor.id)">מחיקה</button>
+          <p class="error-text" *ngIf="donorErrors[donor.id]">{{ donorErrors[donor.id] }}</p>
         </td>
       </tr>
     </tbody>

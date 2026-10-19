@@ -40,10 +40,16 @@ Auth: `TokenService` issues JWTs with `ClaimTypes.NameIdentifier` (user id) and 
 ### Client (`client/src/app/`)
 Standalone components, configured in `app.config.ts` (`provideHttpClient(withInterceptors([jwtInterceptor]))`). Routes in `app.routes.ts`: `/gifts/*` and `/donors/*` are nested under `GiftsNav`/`DonorsNav` shells and protected by `authGuard`; `/basket/:userId`, `/login`, `/register` are top-level.
 
-- Auth state lives in `localStorage` (`token`, `user`). `AuthService.login` stores them and exposes `user$`; `core/jwt.interceptor.ts` attaches `Authorization: Bearer`; `core/auth.guard.ts` only checks token presence (role checks are enforced server-side).
+- Auth state lives in `localStorage` (`token`, `user`). `AuthService.login` stores them and exposes `user$`; `core/jwt.interceptor.ts` attaches `Authorization: Bearer` and logs out on a 401 (except `/api/Auth/` calls); `core/auth.guard.ts` checks that a non-expired token exists (role checks are enforced server-side).
 - Each service in `services/` hardcodes its API base URL as `http://localhost:8088/api/<Controller>` (no environment files). Running the API via `dotnet run` (port 5080) requires changing these URLs.
 - Shared state uses `BehaviorSubject`s in services (e.g. `PurchasesService.basket$`, `totalPrice$`).
 - Some component folders/classes use camelCase names (`checkOut`, `endCheckOut`) unlike the kebab-case rest — match existing imports.
+
+## Working guidelines
+- Choose the simplest, shortest solution that solves the problem, and match the existing code style.
+- Do not add new libraries or new layers/abstractions without asking first.
+- Do not leave dead code, `console.log` calls, or duplicated code.
+- When there are several reasonable approaches, present them briefly with the pro and con of each, and recommend one.
 
 ## Notes
 - Some code comments are in Hebrew.

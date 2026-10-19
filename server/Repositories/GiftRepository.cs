@@ -61,18 +61,16 @@ namespace server.Repositories
             await _context.SaveChangesAsync();
             return gift;
         }
-        public async Task<bool> DeleteGift(int id)
+        public async Task<DeleteResult> DeleteGift(int id)
         {
-            var existGift = await _context.purchases
-                            .FirstOrDefaultAsync(p => p.GiftId == id);
-            if (existGift != null)
-                return false;
             var gift = await _context.Gifts.FindAsync(id);
             if (gift == null)
-                return false;
+                return DeleteResult.NotFound;
+            if (await _context.purchases.AnyAsync(p => p.GiftId == id))
+                return DeleteResult.InUse;
             _context.Gifts.Remove(gift);
             await _context.SaveChangesAsync();
-            return true;
+            return DeleteResult.Deleted;
         }
 
         public async Task<Gift?> UpdateGift(Gift gift)

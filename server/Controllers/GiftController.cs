@@ -100,10 +100,13 @@ namespace server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGift(int id)
         {
-            var deleted = await _giftService.DeleteGift(id);
-            if(!deleted)
-                return BadRequest(new { message = $"Gift with ID {id} is not exist or this gift is already bought!" });
-            return Ok("Deleted!");
+            var result = await _giftService.DeleteGift(id);
+            return result switch
+            {
+                DeleteResult.NotFound => NotFound(new { message = $"Gift with ID {id} does not exist!" }),
+                DeleteResult.InUse => Conflict(new { message = $"Gift with ID {id} already has purchases and cannot be deleted." }),
+                _ => Ok(new { message = "Deleted!" })
+            };
         }
 
         [Authorize(Roles = "Admin")]

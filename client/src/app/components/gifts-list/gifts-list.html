@@ -45,7 +45,7 @@
          
           <div *ngIf="isAdmin" class="admin-actions">
             <button [disabled]="gift.isRandomized" class="icon-btn edit" [routerLink]="['edit', gift.id]" title="עריכה">✏️</button>
-            <button [disabled]="gift.isRandomized" class="icon-btn delete" (click)="deleteGift(gift.id)" title="מחיקה">🗑️</button>
+            <button [disabled]="gift.isRandomized || deleting.has(gift.id)" class="icon-btn delete" (click)="deleteGift(gift.id)" title="מחיקה">🗑️</button>
             <button class="draw-btn" [disabled]="gift.isRandomized" (click)="random(gift.id)">
                {{ gift.isRandomized ? 'בוצעה הגרלה' : 'בצע הגרלה ✨' }}
             </button>
@@ -53,9 +53,7 @@
         </div>
 
    
-        <p class="error-text" *ngIf="showErrorOnDelete && isAdmin">
-          שגיאה: המתנה בשימוש ולא ניתנת למחיקה.
-        </p>
+        <p class="error-text" *ngIf="giftErrors[gift.id]">{{ giftErrors[gift.id] }}</p>
       </div>
     </div>
   </div>

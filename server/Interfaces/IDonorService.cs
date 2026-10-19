@@ -1,4 +1,5 @@
-﻿using static server.DTOs.DonorDto;
+﻿using server.Models;
+using static server.DTOs.DonorDto;
 
 namespace server.Interfaces
 {
@@ -8,7 +9,7 @@ namespace server.Interfaces
         Task<IEnumerable<DonorResponseDto>> GetDonorsList();
         Task<IEnumerable<DonorResponseDto>> SearchDonorsByName(string name);
         Task<DonorResponseDto> CreateDonor(DonorCreateDto donor);    
-        Task<bool> DeleteDonor(string id);
+        Task<DeleteResult> DeleteDonor(string id);
         Task<DonorResponseDto?> UpdateDonor(string id, DonorUpdateDto donor);
         
     }
