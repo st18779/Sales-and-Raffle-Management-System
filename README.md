@@ -29,7 +29,7 @@ A modern, clean, and fully responsive Chinese-auction (gift raffle) platform. Cu
 ## 📸 Screenshots
 
 <img width="1400" alt="Home page" src="docs/screenshots/home.png" />
-<img width="1400" alt="Gift catalog" src="docs/screenshots/catalog.png" />
+![Uploading gift.png…]()
 <img width="1400" alt="Basket" src="docs/screenshots/basket.png" />
 <img width="1400" alt="Checkout" src="docs/screenshots/checkout.png" />
 <img width="400" alt="Mobile catalog" src="docs/screenshots/mobile-catalog.png" />
