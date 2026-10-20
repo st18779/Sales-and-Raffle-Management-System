@@ -77,26 +77,47 @@
   stroke-linejoin: round;
 }
 
+/* hover: רק הטקסט והאייקון מקבלים גוון חום-זהב, בלי רקע */
 .nav-item:hover {
-  background: #f6eedc;
-  color: #8a6d3b;
+  color: #b08d4a;
 }
 
+/* דף פעיל: "מנורה" - פס זהב זוהר בקצה העליון ואור זהוב שיורד ממנו אל הפריט */
 .nav-item.active-route {
   color: #8a6d3b;
 }
 
-/* דף פעיל: קו זהב עם זוהר עדין מתחת לקישור */
+.nav-item.active-route svg {
+  color: #d4af37;
+  filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.6));
+}
+
+/* הפס - בקצה העליון של התפריט (68px), מעל הפריט */
 .nav-item.active-route::after {
   content: '';
   position: absolute;
-  left: 14px;
-  right: 14px;
-  bottom: -4px;
+  top: -14px;
+  left: 50%;
+  width: 60px;
   height: 3px;
-  border-radius: 3px;
+  transform: translateX(-50%);
+  border-radius: 0 0 3px 3px;
   background: linear-gradient(90deg, #d4af37, #f3dc8c, #d4af37);
-  box-shadow: 0 2px 10px rgba(212, 175, 55, 0.75);
+  box-shadow: 0 2px 12px rgba(212, 175, 55, 0.9);
+}
+
+/* האור שיורד מהפס אל הפריט */
+.nav-item.active-route::before {
+  content: '';
+  position: absolute;
+  top: -14px;
+  bottom: 0;
+  left: 50%;
+  width: max(100%, 90px);
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, rgba(212, 175, 55, 0.4), rgba(212, 175, 55, 0));
+  clip-path: polygon(25% 0, 75% 0, 100% 100%, 0 100%);
+  pointer-events: none;
 }
 
 .label-short { display: none; }
@@ -165,7 +186,6 @@
   }
 
   .nav-item svg { width: 22px; height: 22px; }
-  .nav-item:hover { background: none; }
 
   .label-long { display: none; }
   .label-short { display: inline; }
@@ -177,36 +197,17 @@
     border-radius: 0;
   }
 
-  .nav-item.active-route {
-    color: #8a6d3b;
-  }
-
-  .nav-item.active-route svg {
-    color: #d4af37;
-    filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.6));
-  }
-
-  /* דף פעיל: פס זהב קטן בראש הפריט ומתחתיו קרן אור זהובה */
+  /* המנורה בסרגל התחתון: מתחילה בראש הסרגל, צרה ועדינה יותר */
   .nav-item.active-route::after {
-    left: 50%;
-    right: auto;
     top: 0;
-    bottom: auto;
     width: 30px;
-    transform: translateX(-50%);
   }
 
   .nav-item.active-route::before {
-    content: '';
-    position: absolute;
     top: 0;
-    left: 50%;
     width: 56px;
-    height: 100%;
-    transform: translateX(-50%);
     background: linear-gradient(to bottom, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0));
     clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%);
-    pointer-events: none;
   }
 
   .nav-badge {

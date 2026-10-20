@@ -1,0 +1,10 @@
+/* כותרת אזור התורמים - מתחת לתפריט הקבוע */
+h2 {
+  margin: 0;
+  padding-top: 100px;
+  text-align: center;
+  color: #8a6d3b;
+  font-family: 'Assistant', 'Segoe UI', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+}

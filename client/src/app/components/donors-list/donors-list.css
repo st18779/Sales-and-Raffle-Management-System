@@ -3,7 +3,7 @@
   padding: 30px 40px;
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  margin-top: 40px;
+  margin-top: 24px;
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
@@ -25,6 +25,11 @@
 .add-btn:hover {
   filter: brightness(1.1);
   transform: scale(1.05);
+}
+
+/* במסך צר הטבלה נגללת לרוחב בתוך הקופסה, במקום לצאת מהמסך */
+.table-scroll {
+  overflow-x: auto;
 }
 
 table {
@@ -99,10 +104,12 @@ td {
 @media (max-width: 600px) {
   .donors-container {
     padding: 20px;
+    margin: 20px 12px 0;
   }
 
   table {
     font-size: 0.9rem;
+    min-width: 520px;
   }
 
   th, td {
@@ -111,6 +118,7 @@ td {
 
   .add-btn {
     width: 100%;
+    box-sizing: border-box;
     text-align: center;
   }
 }

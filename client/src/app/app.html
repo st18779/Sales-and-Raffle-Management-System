@@ -38,7 +38,7 @@
           <span class="label-long">הוספת תורם</span>
         </a>
       } @else {
-        <button class="nav-item" type="button" [class.active-route]="basketOpen" (click)="toggleBasket()">
+        <button class="nav-item basket-toggle" type="button" (click)="toggleBasket()">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 4h2l2.4 11h10.2l2-7.5H6.2"/></svg>
           <span class="label-long">הסל שלי</span><span class="label-short">סל</span>
           @if (itemCount$ | async; as count) { <span class="nav-badge">{{ count }}</span> }
