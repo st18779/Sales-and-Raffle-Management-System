@@ -12,13 +12,11 @@ import { endCheckOut } from './components/endCheckOut/endCheckOut';
 import { DonorsNav } from './components/donors-nav/donors-nav';
 import { DonorsList } from './components/donors-list/donors-list';
 import { DonorForm } from './components/donor-form/donor-form';
-import { Basket } from './components/basket/basket';
 
 export const routes: Routes = [
     {path: '',component: Home},
     {path:'login',component:Login},
     {path:'register',component:Register},
-    {path:'basket/:userId',component:Basket},
     {path:'gifts', component:GiftsNav, canActivate:[authGuard], children:[
         {path:'',component:GiftsList},
         {path:'add',component:GiftForm},

@@ -67,7 +67,7 @@
   left: 24px;
   top: 90px;
   bottom: 100px;
-  width: 340px;
+  width: 380px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -131,17 +131,16 @@
   padding-inline: 2px;
 }
 
+/* הפריסה של השורה מוגדרת ב-.gift-line (styles.css) */
 .basket-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  padding: 12px;
   margin-bottom: 10px;
-  background: #fff;
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  border-radius: 14px;
   transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* בסל הצר - תמונה קטנה יותר כדי שהשורה לא תישבר */
+.basket-card .gift-line-thumb {
+  width: 44px;
+  height: 44px;
 }
 
 .basket-card:hover {
@@ -149,29 +148,11 @@
   box-shadow: 0 5px 15px rgba(138, 109, 59, 0.12);
 }
 
-.item-details {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.item-name {
-  font-weight: 700;
-  color: #5d4d33;
-  font-size: 1rem;
-  line-height: 1.3;
-}
-
-.item-price {
-  font-size: 0.85rem;
-  color: #8a6d3b;
-}
-
 .item-controls {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 4px 10px;
+  gap: 6px;
+  padding: 2px 8px;
   background: #fdfaf3;
   border: 1px solid #e2d1b1;
   border-radius: 25px;
@@ -183,7 +164,7 @@
   border: none;
   color: #8a6d3b;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1rem;
   cursor: pointer;
   transition: color 0.2s, transform 0.1s;
 }
@@ -258,9 +239,17 @@
     display: block;
   }
 
+  /* במובייל הסל נפתח מהסרגל התחתון, אז הכפתור העגול מוסתר */
+  .basket-fab {
+    display: none;
+  }
+
+  /* בין הסרגל העליון (56px) לסרגל התחתון (64px) */
   .basket-panel {
     left: 12px;
     right: 12px;
+    top: 68px;
+    bottom: 76px;
     width: auto;
     z-index: 1001;
   }

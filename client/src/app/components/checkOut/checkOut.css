@@ -1,21 +1,21 @@
 
 .payment-box {
   max-width: 500px;
-  margin: 40px auto;
+  margin: 100px auto 40px;
   padding: 35px;
   background: #ffffff;
   border-radius: 20px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
   direction: rtl;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Assistant', 'Segoe UI', sans-serif;
 }
 
 h1 {
   text-align: center;
-  color: #2c3e50;
+  color: #8a6d3b;
   font-size: 28px;
   margin-bottom: 30px;
-  border-bottom: 2px solid #f0f0f0;
+  border-bottom: 2px solid rgba(212, 175, 55, 0.4);
   padding-bottom: 15px;
 }
 
@@ -52,9 +52,9 @@ input {
 
 input:focus {
   outline: none;
-  border-color: #4a90e2;
+  border-color: #d4af37;
   background-color: #fff;
-  box-shadow: 0 0 8px rgba(74, 144, 226, 0.2);
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.25);
 }
 
 .total-price {
@@ -62,9 +62,10 @@ input:focus {
   font-weight: bold;
   text-align: center;
   margin: 25px 0;
-  color: #2c3e50;
+  color: #8a6d3b;
   padding: 15px;
-  background: #f1f2f6;
+  background: #fdfaf3;
+  border: 1px solid rgba(212, 175, 55, 0.4);
   border-radius: 10px;
 }
 
@@ -72,7 +73,7 @@ input:focus {
 .pay-button {
   width: 100%;
   padding: 15px;
-  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+  background: linear-gradient(135deg, #8a6d3b, #d4af37);
   color: white;
   border: none;
   border-radius: 12px;
@@ -84,7 +85,7 @@ input:focus {
 
 .pay-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+  box-shadow: 0 5px 15px rgba(138, 109, 59, 0.4);
 }
 
 

@@ -22,6 +22,11 @@ export class PurchasesService {
     map(items => items.reduce((sum, item) => sum + (item.price * item.totalTickets), 0))
   );
 
+  // סך כל הכרטיסים בסל - לתג על כפתור הסל ובתפריט
+  itemCount$ = this.basket$.pipe(
+    map(items => (items ?? []).reduce((sum, i) => sum + i.totalTickets, 0))
+  );
+
 loadBasket(userId: string) {
   this.http
     .get<BasketModel[]>(`${this.BASE_URL}/GetBasket/${userId}`)
@@ -44,7 +49,9 @@ loadBasket(userId: string) {
     return this.http.get<BasketModel[]>(`${this.BASE_URL}/GetBasket/${userId}`);
   }
 
-  checkOut(userId: string): Observable<any>{ /////////////////////////
-    return this.http.put<any>(`${this.BASE_URL}/CheckOut/${userId}`, null)
+  checkOut(userId: string): Observable<any>{
+    return this.http.put<any>(`${this.BASE_URL}/CheckOut/${userId}`, null).pipe(
+      tap(() => this.loadBasket(userId))   // הסל מתרוקן רק אחרי הצלחה
+    );
   }
 }

@@ -2,12 +2,12 @@ import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, Simp
 import { PurchasesService } from '../../services/purchases.service';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { map } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { ImgFallback } from '../../core/img-fallback.directive';
 
 @Component({
   selector: 'app-basket',
-  imports: [RouterLink, CommonModule, FormsModule],
+  imports: [RouterLink, CommonModule, FormsModule, ImgFallback],
   templateUrl: './basket.html',
   styleUrl: './basket.css',
 })
@@ -16,10 +16,7 @@ export class Basket implements OnInit, OnChanges {
   basket$ = this.purchasesService.basket$;
   totalPrice$ = this.purchasesService.totalPrice$;
 
-  // סך כל הכרטיסים בסל - להצגה בתג על הכפתור
-  itemCount$ = this.basket$.pipe(
-    map(items => (items ?? []).reduce((sum, i) => sum + i.totalTickets, 0))
-  );
+  itemCount$ = this.purchasesService.itemCount$;
 
   isOpen = false;
 

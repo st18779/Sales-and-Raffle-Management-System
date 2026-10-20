@@ -12,6 +12,7 @@ namespace server.DTOs
             public string GiftName { get; set; } = string.Empty;
             public int TotalTickets { get; set; }
             public int Price { get; set; } = 10;
+            public string? ImageUrl { get; set; }
             //public List<UserResponseDto> Users { get; set; } = new();
         }
 

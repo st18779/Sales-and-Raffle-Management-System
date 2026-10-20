@@ -1,1 +1,172 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* בסיס לכל האתר: בלי שולי ברירת המחדל של הדפדפן, ורקע קרם כמו הקטלוג */
+body {
+  margin: 0;
+  background: #fdfaf3;
+}
+
+/* שורת מתנה (סל + סיכום הזמנה): תמונה, שם, פירוט, סכום */
+.gift-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 14px;
+}
+
+.gift-line-thumb {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+.gift-line-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: right;
+}
+
+.gift-line-name {
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.3;
+  color: #5d4d33;
+}
+
+.gift-line-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #a08c66;
+  white-space: nowrap;
+}
+
+.gift-line-amount {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #8a6d3b;
+  white-space: nowrap;
+}
+
+/* דפי התחברות והרשמה: התמונה של דף הבית ברקע וכרטיס במרכז */
+.auth-page {
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 16px 40px;
+  background: linear-gradient(rgba(40, 30, 10, 0.35), rgba(40, 30, 10, 0.35)),
+              url('/assets/image-home.png') no-repeat center / cover fixed;
+  font-family: 'Assistant', 'Segoe UI', sans-serif;
+  direction: rtl;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  box-sizing: border-box;
+  padding: 36px;
+  background: rgba(255, 255, 255, 0.95);
+  border-top: 4px solid #d4af37;
+  border-radius: 22px;
+  box-shadow: 0 20px 50px rgba(40, 30, 10, 0.35);
+}
+
+.auth-card-wide { max-width: 460px; }
+
+.auth-card h1 {
+  margin: 0 0 25px;
+  text-align: center;
+  color: #8a6d3b;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.auth-card form > div { margin-bottom: 18px; }
+
+.auth-card label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #5d4d33;
+}
+
+.auth-card input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  font-size: 16px;
+  background: #fdfaf3;
+  border: 1px solid #e2d1b1;
+  border-radius: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.auth-card input:focus {
+  outline: none;
+  border-color: #d4af37;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+
+.auth-card button {
+  width: 100%;
+  margin-top: 8px;
+  padding: 13px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #8a6d3b, #d4af37);
+  box-shadow: 0 4px 15px rgba(138, 109, 59, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.auth-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(138, 109, 59, 0.4);
+}
+
+.auth-card .error-text {
+  margin: 5px 0 0;
+  font-size: 13px;
+  color: #c0392b;
+}
+
+.auth-card .error-message {
+  margin: 15px 0 0;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+  color: #c0392b;
+  background: #fdecea;
+  border-radius: 10px;
+}
+
+.auth-switch {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #7a6a50;
+}
+
+.auth-switch a {
+  color: #8a6d3b;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.auth-switch a:hover { color: #d4af37; }

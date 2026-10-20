@@ -7,10 +7,11 @@
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.05);
   direction: rtl;
+  font-family: 'Assistant', 'Segoe UI', sans-serif;
 }
 
 .success-container h1 {
-  color: #2ecc71;
+  color: #8a6d3b;
   font-size: 32px;
   margin-bottom: 20px;
 }
@@ -21,10 +22,44 @@
   line-height: 1.6;
 }
 
+.order-items {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  text-align: right;
+}
+
+/* הפריסה של השורה מוגדרת ב-.gift-line (styles.css) */
+.order-items li {
+  margin-bottom: 10px;
+}
+
+.success-container .order-total {
+  color: #8a6d3b;
+  font-size: 22px;
+  font-weight: bold;
+  padding: 15px;
+  background: #fdfaf3;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 14px;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 13px 40px;
+  color: #fff;
+  font-weight: 800;
+  text-decoration: none;
+  background: linear-gradient(135deg, #8a6d3b, #d4af37);
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(138, 109, 59, 0.3);
+}
+
 .success-icon {
   width: 80px;
   height: 80px;
-  background: #2ecc71;
+  background: linear-gradient(135deg, #8a6d3b, #d4af37);
   color: white;
   border-radius: 50%;
   display: flex;

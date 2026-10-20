@@ -1,5 +1,5 @@
 .gifts-page-wrapper {
-  padding: 40px 5%;
+  padding: 100px 5% 40px;
   background-color: #fdfaf3; 
   min-height: 100vh;
   /* מספר העמודות נקבע לפי הרוחב הפנוי בפועל (כולל כשהסל פתוח) */

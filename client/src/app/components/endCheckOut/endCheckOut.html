@@ -1,4 +1,22 @@
 <div class="success-container">
-    <h1>התשלום בוצע בהצלחה</h1>
-<p>הזכויות שמורות לכם...</p>
+  <div class="success-icon">✓</div>
+  <h1>ההזמנה בוצעה בהצלחה</h1>
+
+  @if (order?.items?.length) {
+    <ul class="order-items">
+      @for (item of order!.items; track item.giftId) {
+        <li class="gift-line">
+          <img [src]="item.imageUrl" [alt]="item.giftName" class="gift-line-thumb" appImgFallback>
+          <div class="gift-line-info">
+            <span class="gift-line-name">{{ item.giftName }}</span>
+            <span class="gift-line-meta">כמות: {{ item.totalTickets }} × ₪{{ item.price }}</span>
+          </div>
+          <span class="gift-line-amount">₪{{ item.price * item.totalTickets }}</span>
+        </li>
+      }
+    </ul>
+    <p class="order-total">סה"כ שולם: ₪{{ order!.total }}</p>
+  }
+
+  <a routerLink="/gifts" class="back-btn">חזרה לקטלוג</a>
 </div>

@@ -3,4 +3,5 @@ export class BasketModel{
     giftName!: string;
     totalTickets!: number;
     price!:number;
+    imageUrl!: string;
 }

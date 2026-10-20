@@ -155,7 +155,8 @@ namespace server.Repositories
                                    GiftId = p.GiftId,
                                    GiftName = p.Gift.Name,
                                    TotalTickets = p.NumOfTickets,
-                                   Price = p.Gift.Price
+                                   Price = p.Gift.Price,
+                                   ImageUrl = p.Gift.ImageUrl
                                })
                                .ToListAsync();
             return basket;

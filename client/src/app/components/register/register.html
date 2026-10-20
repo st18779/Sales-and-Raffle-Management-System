@@ -1,33 +1,38 @@
-<h1>הרשמה למכירה הסינית השנתית</h1>
-<form>
-     <div>
-    <label for="id">תעודת זהות:</label>
-    <input type="text" id="id" required  [(ngModel)]="id" name="id" />
-      <p *ngIf="showIdError" class="error-text">על התעודת זהות להכיל 9 תווים</p>
-  </div>
+<div class="auth-page">
+  <div class="auth-card auth-card-wide">
+    <h1>הרשמה ל-GiftRaffle</h1>
+    <form>
+         <div>
+        <label for="id">תעודת זהות:</label>
+        <input type="text" id="id" required  [(ngModel)]="id" name="id" />
+          <p *ngIf="showIdError" class="error-text">על התעודת זהות להכיל 9 תווים</p>
+      </div>
+          <div>
+        <label for="fullName"> שם מלא:</label>
+        <input type="text" id="fullName" required  [(ngModel)]="fullName" name="fullName" />
+          <p *ngIf="showFullNameError" class="error-text">על השם להכיל לפחות 3 תווים</p>
+      </div>
       <div>
-    <label for="fullName"> שם מלא:</label>
-    <input type="text" id="fullName" required  [(ngModel)]="fullName" name="fullName" />
-      <p *ngIf="showFullNameError" class="error-text">על השם להכיל לפחות 3 תווים</p>
+        <label for="email">אימייל:</label>
+        <input type="email" id="email" required  [(ngModel)]="email" name="email" />
+          <p *ngIf="showEmailError" class="error-text">כתובת מייל לא תקינה</p>
+      </div>
+         <div>
+        <label for="phone">טלפון:</label>
+        <input type="text" id="phone" required  [(ngModel)]="phone" name="phone" />
+          <p *ngIf="showPhoneError" class="error-text">מספר טלפון לא תקין</p>
+      </div>
+      <div>
+        <label for="password">סיסמה:</label>
+        <input type="password" id="password" required [(ngModel)]="password"  name="password" />
+          <p *ngIf="showPasswordError" class="error-text">על הסיסמה להכיל לפחות 8 תווים</p>
+      </div>
+      <button type="submit" (click)="Register()">הרשמה</button>
+
+      <p *ngIf="showErrorRegister" class="error-message">
+            שגיאה ברישום: ייתכן שהמשתמש כבר קיים במערכת.
+        </p>
+    </form>
+    <p class="auth-switch">כבר יש לך חשבון? <a routerLink="/login">להתחברות</a></p>
   </div>
-  <div>
-    <label for="email">אימייל:</label>
-    <input type="email" id="email" required  [(ngModel)]="email" name="email" />
-      <p *ngIf="showEmailError" class="error-text">כתובת מייל לא תקינה</p>
-  </div>
-     <div>
-    <label for="phone">טלפון:</label>
-    <input type="text" id="phone" required  [(ngModel)]="phone" name="phone" />
-      <p *ngIf="showPhoneError" class="error-text">מספר טלפון לא תקין</p>
-  </div>
-  <div>
-    <label for="password">סיסמה:</label>
-    <input type="password" id="password" required [(ngModel)]="password"  name="password" />
-      <p *ngIf="showPasswordError" class="error-text">על הסיסמה להכיל לפחות 8 תווים</p>
-  </div>
-  <button type="submit" (click)="Register()">הרשמה</button>
- 
-  <p *ngIf="showErrorRegister" class="error-text">
-        שגיאה ברישום: ייתכן שהמשתמש כבר קיים במערכת.
-    </p>
-</form>
+</div>

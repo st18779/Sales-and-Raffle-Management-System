@@ -1,5 +1,5 @@
 
-<form class="payment-box">
+<form class="payment-box" #payForm>
   <h1> תשלום </h1>
   
   <div class="credit-card-form">
@@ -26,10 +26,10 @@
     </div>
 
     <div class="total-price"> סה"כ לתשלום: {{ totalPrice$ | async }} ₪</div>
-    <button (click)="checkOut()" class="pay-button">אישור ותשלום</button>
+    <button type="button" (click)="payForm.reportValidity() && checkOut()" class="pay-button">אישור ותשלום</button>
   </div>
   
 </form>
 
-<p *ngIf="showCheckOutError" class="error-msg">אירעה שגיאה במהלך התשלום. נסה שוב מאוחר יותר</p>
+<p *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</p>
 

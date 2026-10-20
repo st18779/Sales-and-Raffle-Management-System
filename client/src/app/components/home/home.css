@@ -30,7 +30,8 @@
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
   background-size: 200% auto;
-  font-family: 'Assistant', sans-serif;
+  font-family: 'Dancing Script', cursive;
+  direction: ltr;
   animation: gold-shine 4s linear infinite, slideDown 1s ease-out forwards;
 }
 
