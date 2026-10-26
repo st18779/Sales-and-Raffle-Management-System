@@ -33,7 +33,7 @@ namespace server.Data
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
-                entity.Property(e => e.Description).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.Description).IsRequired().HasMaxLength(70);
                 entity.Property(e => e.Price).IsRequired();
                 entity.Property(e => e.IsRandomized).IsRequired();
                 entity.Property(e => e.ImageUrl).IsRequired();
@@ -52,7 +52,7 @@ namespace server.Data
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.NumOfTickets).IsRequired();
                 entity.Property(e => e.IsClosed).IsRequired();
-                entity.Property(e => e.PurchaseDate).IsRequired().HasDefaultValue(DateTime.Now.Date);
+                entity.Property(e => e.PurchaseDate).IsRequired().HasDefaultValueSql("GETDATE()");
             });
 
 

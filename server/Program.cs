@@ -66,7 +66,7 @@ try
             Scheme = "Bearer",
             BearerFormat = "JWT",
             In = ParameterLocation.Header,
-            Description = "Enter your JWT token in the format: Bearer {token}"
+            Description = "Paste only the JWT token (starts with eyJ). Do NOT type 'Bearer' - Swagger adds it automatically."
         });
         options.AddSecurityRequirement(new OpenApiSecurityRequirement
         {

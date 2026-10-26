@@ -5,7 +5,7 @@
     
     <!-- תמונה + קטגוריה -->
     <div class="image-section">
-      <img [src]="curGift.imageUrl" [alt]="curGift.name" class="main-gift-image">
+      <img [src]="curGift.imageUrl" [alt]="curGift.name" class="main-gift-image" appImgFallback>
       <div class="category-tag">{{curGift.categoryName}}</div>
     </div>
 
@@ -36,7 +36,12 @@
 
       <!-- כפתור הוספה לסל -->
       <div class="action-area">
-        <button class="add-to-cart-btn">הוספה לסל הרכישות ✨</button>
+        @if (curGift.isRandomized) {
+          <p class="winner-text">🏆 ההגרלה הסתיימה. הזוכה: <strong>{{ curGift.winnerUser?.fullName }}</strong></p>
+        } @else if (!isAdmin) {
+          <button class="add-to-cart-btn keeps-basket-open" (click)="addToBasket()">הוספה לסל הרכישות ✨</button>
+          @if (errorMessage) { <p class="error-text">{{ errorMessage }}</p> }
+        }
       </div>
     </div>
 

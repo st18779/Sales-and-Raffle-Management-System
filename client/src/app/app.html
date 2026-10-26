@@ -1,33 +1,62 @@
- <nav class="main-nav">
-   <div class="logo">המכירה הסינית 🎁</div>
-   <div class="links">
-    <a routerLink="">דף הבית</a>
-    @if(!isUserLoggedIn){
-      <a routerLink="login" routerLinkActive="active-route">התחברות</a>
-      <a routerLink="register" routerLinkActive="active-route">הרשמה</a>
-    }
-    @if(isUserLoggedIn){
-      <a routerLink="gifts" routerLinkActive="active-route">רשימת מתנות</a>
-    
-    @if(isAdmin){
-      <a routerLink="gifts/add" routerLinkActive="active-route">הוספת מתנה</a>
-      <a routerLink="donors" routerLinkActive="active-route">רשימת תורמים</a>
-      <a routerLink="donors/add" routerLinkActive="active-route">הוספת תורם</a>
-     }
-     @if(isUserLoggedIn && !isAdmin){
-      <a [routerLink]="['/basket', user.id]">הסל שלי 🛒</a>    
-     }
+<!-- במחשב: סרגל עליון. במובייל (עד 700px) הקישורים הופכים לסרגל תחתון - ב-CSS, בלי לשכפל את הרשימה -->
+<nav class="main-nav" dir="rtl">
+  <a class="logo" routerLink="/">GiftRaffle</a>
 
-    <button (click)="logOut()">התנתקות</button>
+  <div class="links">
+    <a class="nav-item" routerLink="/" routerLinkActive="active-route" [routerLinkActiveOptions]="{ exact: true }">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg>
+      <span class="label-long">דף הבית</span><span class="label-short">בית</span>
+    </a>
+
+    @if (!isUserLoggedIn) {
+      <a class="nav-item" routerLink="/login" routerLinkActive="active-route">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4"/><path d="M14 8l4 4-4 4"/><path d="M18 12H8"/></svg>
+        <span class="label-long">התחברות</span><span class="label-short">כניסה</span>
+      </a>
+      <a class="nav-item" routerLink="/register" routerLinkActive="active-route">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="8" r="3.5"/><path d="M3.5 20c.8-3.6 3.5-5.5 6.5-5.5 1.6 0 3.1.5 4.3 1.5"/><path d="M19 14v6M16 17h6"/></svg>
+        <span class="label-long">הרשמה</span><span class="label-short">הרשמה</span>
+      </a>
+    } @else {
+      <a class="nav-item" routerLink="/gifts" routerLinkActive="active-route" [routerLinkActiveOptions]="{ exact: true }">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v9h14v-9"/><path d="M12 8v13"/><path d="M12 8C10 4 6 4 6 6.5S9 8 12 8s6-.5 6-1.5S14 4 12 8z"/></svg>
+        <span class="label-long">רשימת מתנות</span><span class="label-short">מתנות</span>
+      </a>
+
+      @if (isAdmin) {
+        <a class="nav-item" routerLink="/gifts/add" routerLinkActive="active-route">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+          <span class="label-long">הוספת מתנה</span><span class="label-short">מתנה</span>
+        </a>
+        <a class="nav-item" routerLink="/donors" routerLinkActive="active-route" [routerLinkActiveOptions]="{ exact: true }">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.5-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14.8c1.9.7 3.1 2.4 3.5 5.2"/></svg>
+          <span class="label-long">רשימת תורמים</span><span class="label-short">תורמים</span>
+        </a>
+        <!-- במובייל מוסתר: יש כפתור "הוספת תורם חדש" בתוך רשימת התורמים -->
+        <a class="nav-item desktop-only" routerLink="/donors/add" routerLinkActive="active-route">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="8" r="3.5"/><path d="M3.5 20c.8-3.6 3.5-5.5 6.5-5.5 1.6 0 3.1.5 4.3 1.5"/><path d="M19 14v6M16 17h6"/></svg>
+          <span class="label-long">הוספת תורם</span>
+        </a>
+      } @else {
+        <button class="nav-item basket-toggle" type="button" (click)="toggleBasket()">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 4h2l2.4 11h10.2l2-7.5H6.2"/></svg>
+          <span class="label-long">הסל שלי</span><span class="label-short">סל</span>
+          @if (itemCount$ | async; as count) { <span class="nav-badge">{{ count }}</span> }
+        </button>
+      }
+
+      <button class="nav-item logout" type="button" (click)="logOut()">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/><path d="M10 16l-4-4 4-4"/><path d="M6 12h10"/></svg>
+        <span class="label-long">התנתקות</span><span class="label-short">יציאה</span>
+      </button>
     }
-    </div>
-  
- </nav>
-<main class="main" dir="rtl">
-         
-   <router-outlet />  
+  </div>
+</nav>
+
+<main class="main" dir="rtl" [class.basket-open]="basketOpen">
+
+   <router-outlet />
      @if(isUserLoggedIn && !isAdmin){
-      <app-basket [curUserId]="user.id"></app-basket>
+      <app-basket [curUserId]="user.id" (openChange)="basketOpen = $event"></app-basket>
       }
 </main>
-

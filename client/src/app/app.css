@@ -1,95 +1,218 @@
-:host-context(app-home) .main {
-  padding-top: 0;
+/* כשהסל פתוח - התוכן זז ימינה ומפנה מקום לפאנל (24px מרווח + 380px פאנל + 16px) */
+.main {
+  transition: padding-left 0.3s ease;
 }
 
+@media (min-width: 701px) {
+  .main.basket-open {
+    padding-left: 420px;
+  }
+}
+
+/* ===== תפריט עליון (מחשב) ===== */
 .main-nav {
   position: fixed;
   top: 0;
-  width: 95%;
+  left: 0;
+  right: 0;
+  height: 68px;
+  box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 15px 50px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  z-index: 1000;
+  gap: 32px;
+  padding: 0 40px;
+  background: #fdfaf3;
   border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-  font-family: 'Assistant', sans-serif;
+  z-index: 1000;
+  font-family: 'Assistant', 'Segoe UI', sans-serif;
 }
 
 .logo {
-  font-size: 1.8rem; /* גודל פונט גדול יותר */
-  font-weight: bold;
-  color: #8a6d3b;
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 4px 2px;
+  text-decoration: none;
+  direction: ltr;
+  background: linear-gradient(135deg, #8a6d3b, #d4af37);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .links {
+  flex: 1;
   display: flex;
-  gap: 20px;
   align-items: center;
+  gap: 4px;
 }
 
-.links a {
-  text-decoration: none;
-  color: #5d4d33;
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  font-family: inherit;
+  font-size: 1.05rem;
   font-weight: 600;
-  font-size: 1.1rem; /* גודל פונט גדול יותר */
-  transition: color 0.3s, background-color 0.3s;
-  padding: 8px 15px; /* הוספת מרווחים פנימיים */
-  border-radius: 10px; /* פינות מעוגלות */
-}
-
-/* כאשר הקישור פעיל */
-.links a.active-route {
-  background-color: #d4af37; /* רקע צהוב בהיר */
-  color: white; /* טקסט בהיר */
-  font-weight: 700; /* הדגשה של הטקסט */
-  border-radius: 20px; /* עיגול יותר רחב לקישורים פעילים */
-}
-
-/* אפקט Hover לקישורים */
-.links a:hover {
-  background-color: #f0e6d2; /* צבע רקע בהיר */
-  color: #8a6d3b; /* צבע טקסט כהה יותר */
-}
-
-button {
-  background: transparent;
-  border: 1px solid #8a6d3b;
-  color: #8a6d3b;
-  padding: 8px 20px; /* הגדלת המרווחים */
-  border-radius: 20px;
+  color: #5d4d33;
+  text-decoration: none;
+  background: none;
+  border: none;
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 1.1rem; /* גודל פונט יותר גדול */
-  transition: all 0.3s;
+  transition: color 0.2s, background-color 0.2s;
 }
 
-button:hover {
-  background: #8a6d3b;
-  color: white;
+.nav-item svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-app-basket {
-  position: fixed;
-  top: 100px;
-  left: 20px;
-  width: 280px;
-  height: calc(100vh - 120px);
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  border-radius: 20px;
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  box-shadow: -5px 5px 20px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  z-index: 900;
-  overflow-y: auto;
-  transition: all 0.3s ease;
+/* hover: רק הטקסט והאייקון מקבלים גוון חום-זהב, בלי רקע */
+.nav-item:hover {
+  color: #b08d4a;
 }
 
-app-basket h2 {
+/* דף פעיל: "מנורה" - פס זהב זוהר בקצה העליון ואור זהוב שיורד ממנו אל הפריט */
+.nav-item.active-route {
   color: #8a6d3b;
-  font-family: 'Assistant', sans-serif;
-  border-bottom: 2px solid #d4af37;
-  padding-bottom: 10px;
-  text-align: center;
+}
+
+.nav-item.active-route svg {
+  color: #d4af37;
+  filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.6));
+}
+
+/* הפס - בקצה העליון של התפריט (68px), מעל הפריט */
+.nav-item.active-route::after {
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  width: 60px;
+  height: 3px;
+  transform: translateX(-50%);
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(90deg, #d4af37, #f3dc8c, #d4af37);
+  box-shadow: 0 2px 12px rgba(212, 175, 55, 0.9);
+}
+
+/* האור שיורד מהפס אל הפריט */
+.nav-item.active-route::before {
+  content: '';
+  position: absolute;
+  top: -14px;
+  bottom: 0;
+  left: 50%;
+  width: max(100%, 90px);
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, rgba(212, 175, 55, 0.4), rgba(212, 175, 55, 0));
+  clip-path: polygon(25% 0, 75% 0, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+
+.label-short { display: none; }
+
+.nav-badge {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: #c0392b;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+/* התנתקות - בקצה השמאלי, כפתור עם מסגרת */
+.logout {
+  margin-inline-start: auto;
+  border: 1px solid rgba(138, 109, 59, 0.5);
+  border-radius: 20px;
+}
+
+/* ===== מובייל: לוגו למעלה, קישורים בסרגל תחתון ===== */
+@media (max-width: 700px) {
+  .main {
+    padding-bottom: 72px;
+  }
+
+  .main-nav {
+    height: 56px;
+    justify-content: center;
+    padding: 0 16px;
+  }
+
+  .logo { font-size: 1.9rem; }
+
+  .links {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 64px;
+    padding: 0 4px env(safe-area-inset-bottom);
+    justify-content: space-around;
+    gap: 0;
+    background: #fffdf8;
+    border-top: 1px solid rgba(212, 175, 55, 0.35);
+    box-shadow: 0 -4px 16px rgba(60, 45, 15, 0.08);
+    overflow: hidden;
+  }
+
+  .nav-item {
+    flex: 1;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    padding: 0 2px;
+    font-size: 0.72rem;
+    color: #9a8a6c;
+    border-radius: 0;
+  }
+
+  .nav-item svg { width: 22px; height: 22px; }
+
+  .label-long { display: none; }
+  .label-short { display: inline; }
+  .desktop-only { display: none; }
+
+  .logout {
+    margin: 0;
+    border: none;
+    border-radius: 0;
+  }
+
+  /* המנורה בסרגל התחתון: מתחילה בראש הסרגל, צרה ועדינה יותר */
+  .nav-item.active-route::after {
+    top: 0;
+    width: 30px;
+  }
+
+  .nav-item.active-route::before {
+    top: 0;
+    width: 56px;
+    background: linear-gradient(to bottom, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0));
+    clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%);
+  }
+
+  .nav-badge {
+    position: absolute;
+    top: 6px;
+    left: calc(50% + 6px);
+  }
 }

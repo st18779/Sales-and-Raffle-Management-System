@@ -51,7 +51,7 @@ namespace server.Services
             return MapToResponseDto(createdDonor);
         }
 
-        public async Task<bool> DeleteDonor(string id)
+        public async Task<DeleteResult> DeleteDonor(string id)
         {
             return await _donorRepository.DeleteDonor(id);
         }
@@ -83,9 +83,11 @@ namespace server.Services
                     Price = gift.Price,
                     IsRandomized = gift.IsRandomized,
                     CategoryName = gift.Category?.Name ?? string.Empty,
+                    CategoryId = gift.CategoryId,
                     DonorName = donor.Name,
+                    DonorId = donor.Id,
                     ImageUrl = gift.ImageUrl ?? string.Empty,
-                    WinnerUser = gift.WinnerUser
+                    WinnerUser = DTOs.GiftDTOs.WinnerDto.From(gift.WinnerUser)
                 }).ToList() ?? new List<DTOs.GiftDTOs.GiftResponseDto>()
             };
         }

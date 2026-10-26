@@ -8,7 +8,7 @@ namespace server.Interfaces
         Task<Gift?> GetGiftById(int id);
         Task<IEnumerable<Gift>> GetGiftsByCategory(int categoryId);
         Task<IEnumerable<Gift>> SearchGiftByName(string name);
-        Task<bool> DeleteGift(int id);
+        Task<DeleteResult> DeleteGift(int id);
         Task<Gift> CreateGift(Gift gift);
         Task<Gift?> UpdateGift(Gift gift);
         Task<User?> RandomWinner(int id);

@@ -1,128 +1,150 @@
-# Sales and Raffle Management System
+# 🎁 GiftRaffle
+
+A modern, clean, and fully responsive Chinese-auction (gift raffle) platform. Customers buy raffle tickets for gifts, and admins manage the catalog and draw the winners. Built with Angular, ASP.NET Core and SQL Server, and ready to run with Docker.
+
+---
+
+## ✨ Features
+- 📱 **Fully Responsive:** Top navigation on desktop and a bottom navigation bar on mobile.
+- 🎨 **Modern Design:** Clean gold-and-cream layout with a focus on high-quality gift imagery.
+- 🛒 **Smart Basket:** Items are saved as a draft in the database and only become real purchases after a confirmed checkout.
+- 🏆 **Winner Draw:** Admins draw a winner for each gift, weighted by the number of tickets each buyer purchased.
+- 🔐 **Secure Access:** JWT authentication with role-based authorization (Admin and Customer).
+- ✅ **Validation:** Rules enforced on both the client and the server.
+
+### 👤 Customers
+- Register and sign in
+- Browse the gift catalog with category, donor and ticket price
+- Add gifts to a floating basket and check out with an order summary
+- See the winner on each gift after the raffle is drawn (drawn gifts can no longer be bought)
+
+### 🛠️ Admins
+- Add, edit and delete gifts (a gift that already has purchases cannot be deleted)
+- Add, edit and delete donors (a donor who still has gifts cannot be deleted)
+- Draw a winner for each gift
+- Admin-only API endpoints for income and winners reports
+
+---
+
+## 📸 Screenshots
+
+<img width="1180" height="1474" alt="home" src="https://github.com/user-attachments/assets/3eba43c3-b4ee-4ce3-a62c-cbb5c1a6d208" />
+
+<img width="2822" height="1524" alt="gift" src="https://github.com/user-attachments/assets/a7ac28a2-0e19-46b8-a363-f9df25242966" />
+
+<img width="2816" height="1508" alt="payment" src="https://github.com/user-attachments/assets/0bf0671b-f68f-432c-836b-5d1eff2f7530" />
+
+<img width="1176" height="1474" alt="mobile gift" src="https://github.com/user-attachments/assets/17beea7e-5a03-4ca3-9365-d5a0c58553eb" />
 
 
-## What is this project?
 
-ChineseSale is a website for running a gift raffle. A visitor can look through the gifts, choose gifts to enter, and check out their basket. An administrator can maintain the gift, donor, and category information and draw raffle winners.
+---
 
-In short: the website is the part people use, the API is the part that processes their requests, and SQL Server stores the information.
+## 🛠️ Technologies Used
+- **Angular 20:** Standalone components, RxJS and TypeScript for the website.
+- **ASP.NET Core 8:** Web API with Entity Framework Core (code-first), JWT, Serilog and Swagger.
+- **SQL Server 2022:** The database, with migrations applied automatically on startup.
+- **Docker & Docker Compose:** One command to run the database, API and website.
 
-## What can people do?
+---
 
-- **Visitors and signed-in users:** browse and search gifts, view donors, add gift entries to a basket, and check out.
-- **Administrators:** manage gifts, donors, and categories, and use raffle and sales reports. These actions require an account with the Admin role.
+## 🚀 Getting Started
 
-## Start the whole project
+### Prerequisites
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [Node.js](https://nodejs.org/) 20 or newer (only for running the website outside Docker)
 
-The easiest way to try the project is with Docker Compose. Install Docker Desktop, open a terminal in the project folder, and run:
+### 1. Clone the repository
+```bash
+git clone https://github.com/st18779/Sales-and-Raffle-Management-System.git
+cd Sales-and-Raffle-Management-System
+```
 
+### 2. Create your `.env` file
+Secrets are **not** stored in the repository. Copy the example file and fill in your own values:
+```bash
+cp .env.example .env
+```
+Set a strong SQL Server password and a long random JWT signing key.
+
+### 3. Run everything with Docker
 ```bash
 docker compose up --build
 ```
 
-The first run may take a few minutes while Docker downloads and builds the required software. When it is running, open:
+| Service | URL |
+| --- | --- |
+| Website | http://localhost:4200 |
+| API | http://localhost:8088 |
+| Swagger | http://localhost:8088/swagger |
 
-- **Website:** [http://localhost:4200](http://localhost:4200)
-- **API documentation:** [http://localhost:8088/swagger](http://localhost:8088/swagger)
-
-The API documentation is mainly useful to developers; visitors can use the website. To stop the project, press `Ctrl+C` in the terminal. The database is kept for the next run. To remove the database and all saved data too, run `docker compose down --volumes` from the project folder. This permanently deletes that data.
-
-The Compose file includes development database credentials so the project can run locally. They are not production credentials and must be replaced before deployment or sharing the service publicly.
-
-## What is included?
-
-- `client/` - the website, built with Angular.
-- `server/` - the API, built with ASP.NET Core. It handles sign-in, gift and donor information, baskets, checkout, and raffle operations.
-- SQL Server - the database that stores users, gifts, donors, categories, and purchases.
-- `docker-compose.yml` - starts the website, API, and database together.
-
-When the API starts, it checks whether the database needs updates and attempts to apply them automatically.
-
-## Run parts separately (development)
-
-This section is for developers who want to run or change the website and API separately. You need Docker, .NET 8 SDK, and Node.js 20 or later with npm.
-
-### 1. Start the database
-
-From the project folder, run:
-
+### Development mode
+Run the database and API in Docker and the Angular dev server locally, so UI changes appear instantly:
 ```bash
-docker compose up -d db
-```
-
-### 2. Start the API
-
-The API reads its database connection and token-signing key from `server/appsettings.json`. Set these to private values suitable for your local machine before starting the API. You can provide them in PowerShell without putting them in the source file:
-
-```powershell
-$env:ConnectionStrings__DefaultConnection = "Server=localhost,1433;Database=ChineseSale;User Id=sa;Password=<your-sql-password>;TrustServerCertificate=True;Encrypt=False;"
-$env:JwtSettings__SecretKey = "<your-private-signing-key>"
-dotnet run --project server --launch-profile http
-```
-
-The API's local HTTP address is `http://localhost:5080`. The website's current configuration sends API requests to port `8088`, so the simplest way to run the entire application is the Docker Compose method above. If you run the website and API separately, update the website's API address to match the API port and allow the website's address in the API's CORS configuration.
-
-### 3. Start the website
-
-Open a second terminal:
-
-```powershell
+docker compose up -d db api
 cd client
 npm ci
 npm start
 ```
+> Do not run the `client` container and `npm start` together: both use port 4200.
 
-Then open [http://localhost:4200](http://localhost:4200). The website refreshes as you change its source files.
+---
 
-## Developer reference
+## 👑 Admin Users
+There is no admin registration screen. Admin users are created directly in the database by setting `IsAdmin = 1` on a user in the `Users` table. Registering through the website always creates a regular customer.
 
-### Main API areas
+---
 
-All API addresses start with `/api`. For example, `/api/Gift/giftsList` returns the gift list.
-
-| API area | What it handles |
-| --- | --- |
-| `/api/Auth` | Registering and signing in |
-| `/api/Gift` | Browsing, searching, and managing gifts; drawing winners |
-| `/api/Category` | Viewing and managing gift categories |
-| `/api/Donor` | Viewing and managing donors |
-| `/api/Purchases` | Baskets, checkout, and sales reports |
-| `/api/User` | User records |
-
-The complete list of requests and their data formats is available in Swagger at [http://localhost:8088/swagger](http://localhost:8088/swagger) when using Docker Compose. Requests marked for administrators require a valid sign-in token and the Admin role.
-
-### Common commands
-
-Run each command from the directory shown:
-
-| Task | Command | Directory |
-| --- | --- | --- |
-| Start the website | `npm start` | `client/` |
-| Build the website | `npm run build` | `client/` |
-| Run website tests | `npm test` | `client/` |
-| Build the API | `dotnet build server.csproj` | `server/` |
-| Start all services | `docker compose up --build` | project folder |
-
-Website tests use Karma and Jasmine. There is no separate .NET test project in the repository.
-
-### Configuration and security
-
-- Database settings are read from `ConnectionStrings:DefaultConnection`. Token settings are read from `JwtSettings` in `server/appsettings.json`.
-- The API currently allows website requests from `http://localhost:4200` only.
-- The Compose setup enables the API's development documentation and uses plain HTTP for local development.
-- Do not use the credentials or signing key from local configuration for a public or production deployment. Use private secrets and a production-ready configuration.
-- API logs are written to the terminal and to daily files under `server/Logs/`.
-
-### Folder guide
-
-```text
-client/                 Website
-server/Controllers/     API request handlers
-server/Data/            Database setup
-server/DTOs/            Data sent to and from the API
-server/Models/          Database records
-server/Repositories/    Database access
-server/Services/        Application behavior
-server/Migrations/      Database update history
-docker-compose.yml      Local startup configuration
+## 📂 Project Structure
 ```
+.
+├── client/                  # Angular application
+│   └── src/app/
+│       ├── components/      # Pages and UI components
+│       ├── services/        # HTTP services and shared state
+│       ├── core/            # Auth guard, JWT interceptor, shared directives
+│       └── models/          # TypeScript models
+├── server/                  # ASP.NET Core Web API
+│   ├── Controllers/         # HTTP endpoints
+│   ├── Services/            # Business logic
+│   ├── Repositories/        # Data access (EF Core)
+│   ├── Interfaces/          # Service and repository contracts
+│   ├── DTOs/                # Request and response models
+│   ├── Models/              # Database entities
+│   ├── Data/                # DbContext
+│   ├── Migrations/          # EF Core migrations
+│   └── Middleware/          # Request logging and rate limiting
+├── docker-compose.yml
+├── .env.example             # Template for required environment variables
+└── README.md
+```
+
+---
+
+## 🔌 API Overview
+Open Swagger at `/swagger` for the full list. The main groups are:
+- **Auth:** register and login (returns a JWT)
+- **Gift:** list, details, create, update, delete and random winner
+- **Donor:** list, details, create, update and delete
+- **Category:** list and details
+- **Purchases:** basket (add, remove, load), checkout, and income and winners reports (admin)
+
+Admin endpoints require an `Authorization: Bearer <token>` header with an admin token.
+
+---
+
+## 🧰 Useful Commands
+
+| Task | Command | Folder |
+| --- | --- | --- |
+| Run everything | `docker compose up --build` | repo root |
+| Start only the database | `docker compose up -d db` | repo root |
+| Stop everything | `docker compose down` | repo root |
+| Run the website | `npm start` | `client/` |
+| Build the website | `npm run build` | `client/` |
+| Add an EF migration | `dotnet ef migrations add <Name>` | `server/` |
+
+---
+
+## 👩‍💻 Author
+Built by [@st18779](https://github.com/st18779).

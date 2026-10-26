@@ -1,0 +1,8 @@
+# Local secrets (copy .env.example to .env and fill in real values)
+.env
+.env.*
+!.env.example
+CLAUDE.md
+CLAUDE.local.md
+PROJECT_REQUIREMENTS.md
+.claude/

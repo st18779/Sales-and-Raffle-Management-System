@@ -77,7 +77,7 @@
   margin-bottom: 30px;
 }
 
-.donor-name span { font-weight: bold; text-decoration: underline; }
+.donor-name span { font-weight: bold; }
 
 .divider {
   height: 2px;
@@ -127,6 +127,23 @@
 .add-to-cart-btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 15px 30px rgba(138, 109, 59, 0.4);
+}
+
+.winner-text {
+  padding: 15px;
+  background: #fdfaf3;
+  border: 1px solid #d4af37;
+  border-radius: 15px;
+  color: #5d4d33;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.error-text {
+  margin-top: 10px;
+  color: #c0392b;
+  font-weight: bold;
+  text-align: center;
 }
 
 /* התאמה לנייד */

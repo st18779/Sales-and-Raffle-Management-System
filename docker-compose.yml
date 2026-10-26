@@ -5,7 +5,7 @@ services:
 
     environment:
       ACCEPT_EULA: "Y"
-      MSSQL_SA_PASSWORD: "P@ssreuven2026!"
+      MSSQL_SA_PASSWORD: "${MSSQL_SA_PASSWORD:?Set MSSQL_SA_PASSWORD in .env (see .env.example)}"
 
     ports:
       - "1433:1433"
@@ -35,7 +35,8 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       EnableHttpsRedirection: "false"
       EnableSwagger: "true"
-      ConnectionStrings__DefaultConnection: "Server=db;Database=ChineseSale;User Id=sa;Password=P@ssreuven2026!;TrustServerCertificate=True;Encrypt=False;"
+      ConnectionStrings__DefaultConnection: "Server=db;Database=ChineseSale;User Id=sa;Password=${MSSQL_SA_PASSWORD:?Set MSSQL_SA_PASSWORD in .env};TrustServerCertificate=True;Encrypt=False;"
+      JwtSettings__SecretKey: "${JWT_SECRET_KEY:?Set JWT_SECRET_KEY in .env (see .env.example)}"
 
     depends_on:
       db:

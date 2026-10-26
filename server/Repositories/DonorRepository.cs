@@ -41,14 +41,17 @@ namespace server.Repositories
             await _context.SaveChangesAsync();
             return donor;
         }
-        public async Task<bool> DeleteDonor(string id)
+        public async Task<DeleteResult> DeleteDonor(string id)
         {
             var donor = await _context.Donors.FindAsync(id);
             if (donor == null)
-                return false;
+                return DeleteResult.NotFound;
+            // מחיקת תורם מוחקת (CASCADE) גם את המתנות שלו ואת הרכישות שלהן - לא מאפשרים
+            if (await _context.Gifts.AnyAsync(g => g.DonorId == id))
+                return DeleteResult.InUse;
             _context.Donors.Remove(donor);
             await _context.SaveChangesAsync();
-            return true;
+            return DeleteResult.Deleted;
         }
 
         public async Task<Donor?> UpdateDonor(Donor donor)

@@ -2,7 +2,6 @@
 
   <div class="header-section">
     <h1 class="page-title">קטלוג המתנות שלנו ✨</h1>
-    <button *ngIf="isAdmin"  class="admin-add-btn"  [routerLink]="['/gifts', 'add']" class="save-btn">  + הוספת מתנה חדשה</button>
   </div>
   
 
@@ -14,15 +13,14 @@
          [class.is-winner]="gift.isRandomized">
 
       
-      <div class="image-wrapper">
-        <img [src]="gift.imageUrl" [alt]="gift.name" class="gift-image">
+      <div class="image-wrapper" [routerLink]="['/gifts', gift.id]">
+        <img [src]="gift.imageUrl" [alt]="gift.name" class="gift-image" appImgFallback>
         <div class="price-badge">{{ gift.price }} ₪</div>
       </div>
 
   
       <div class="gift-content">
-        <!-- <h3 class="gift-name">{{ gift.name }}</h3> -->
-        <a class="gift-name" [routerLink]="['/gifts', gift.id]">{{ gift.name }}</a>
+        <h3 class="gift-name">{{ gift.name }}</h3>
         <p class="gift-description">{{ gift.description }}</p>
 
       
@@ -37,7 +35,7 @@
           
           <button *ngIf="!isAdmin"
                   [disabled]="gift.isRandomized"
-                  class="buy-btn"
+                  class="buy-btn keeps-basket-open"
                   (click)="add(gift.id)">
             {{ gift.isRandomized ? 'ההגרלה הסתיימה' : 'הוספה לסל 🛒' }}
           </button>
@@ -45,7 +43,7 @@
          
           <div *ngIf="isAdmin" class="admin-actions">
             <button [disabled]="gift.isRandomized" class="icon-btn edit" [routerLink]="['edit', gift.id]" title="עריכה">✏️</button>
-            <button [disabled]="gift.isRandomized" class="icon-btn delete" (click)="deleteGift(gift.id)" title="מחיקה">🗑️</button>
+            <button [disabled]="gift.isRandomized || deleting.has(gift.id)" class="icon-btn delete" (click)="deleteGift(gift.id)" title="מחיקה">🗑️</button>
             <button class="draw-btn" [disabled]="gift.isRandomized" (click)="random(gift.id)">
                {{ gift.isRandomized ? 'בוצעה הגרלה' : 'בצע הגרלה ✨' }}
             </button>
@@ -53,9 +51,7 @@
         </div>
 
    
-        <p class="error-text" *ngIf="showErrorOnDelete && isAdmin">
-          שגיאה: המתנה בשימוש ולא ניתנת למחיקה.
-        </p>
+        <p class="error-text" *ngIf="giftErrors[gift.id]">{{ giftErrors[gift.id] }}</p>
       </div>
     </div>
   </div>

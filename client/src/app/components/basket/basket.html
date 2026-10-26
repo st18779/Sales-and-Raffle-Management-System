@@ -23,17 +23,21 @@
 
   <div class="basket-items-list">
     @for (item of basket$ | async; track item.giftId) {
-      <div class="basket-card">
-        <div class="item-details">
-          <span class="item-name">{{ item.giftName }}</span>
-          <span class="item-price">כרטיסים: {{ item.totalTickets }}</span>
+      <div class="basket-card gift-line">
+        <img [src]="item.imageUrl" [alt]="item.giftName" class="gift-line-thumb" appImgFallback>
+        <div class="gift-line-info">
+          <span class="gift-line-name">{{ item.giftName }}</span>
+          <span class="gift-line-meta">
+            כמות:
+            <span class="item-controls">
+              <button class="control-btn" (click)="add(item.giftId)" aria-label="הוספה">+</button>
+              <span class="ticket-count">{{ item.totalTickets }}</span>
+              <button class="control-btn" (click)="remove(item.giftId)" aria-label="הסרה">−</button>
+            </span>
+            × ₪{{ item.price }}
+          </span>
         </div>
-
-        <div class="item-controls">
-          <button class="control-btn" (click)="add(item.giftId)" aria-label="הוספה">+</button>
-          <span class="ticket-count">{{ item.totalTickets }}</span>
-          <button class="control-btn" (click)="remove(item.giftId)" aria-label="הסרה">−</button>
-        </div>
+        <span class="gift-line-amount">₪{{ item.price * item.totalTickets }}</span>
       </div>
     } @empty {
       <div class="empty-basket">

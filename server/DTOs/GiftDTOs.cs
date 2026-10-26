@@ -13,10 +13,22 @@ namespace server.DTOs
             public int Price { get; set; }
             public bool IsRandomized { get; set; } = false;
             public string CategoryName { get; set; } = string.Empty;
+            public int? CategoryId { get; set; }
             public string DonorName { get; set; } = string.Empty;
+            public string DonorId { get; set; } = string.Empty;
             public string ImageUrl { get; set; } = string.Empty;
-            public User? WinnerUser { get; set; } = null;
+            public WinnerDto? WinnerUser { get; set; } = null;
 
+        }
+
+        // Public info about a raffle winner - never expose the full User entity (it contains the password)
+        public class WinnerDto
+        {
+            public string FullName { get; set; } = string.Empty;
+            public string Phone { get; set; } = string.Empty;
+
+            public static WinnerDto? From(User? user) =>
+                user == null ? null : new WinnerDto { FullName = user.FullName, Phone = user.Phone };
         }
 
         public class GiftCreateDto
@@ -27,10 +39,10 @@ namespace server.DTOs
             [MaxLength(20)]
             public string Name { get; set; } = string.Empty;
             [Required]
-            [MaxLength(50)]
+            [MaxLength(70)]
             public string Description { get; set; } = string.Empty;
             [Required]
-            [AllowedValues(10,50,ErrorMessage = "A ticket price can be only 10 or 50")]
+            [Range(1, 100, ErrorMessage = "A ticket price must be a whole number between 1 and 100")]
             public int Price { get; set; }
             [Required]
             public int CategoryId { get; set; }
@@ -47,10 +59,10 @@ namespace server.DTOs
             [MaxLength(20)]
             public string Name { get; set; } = string.Empty;
             
-            [MaxLength(50)]
+            [MaxLength(70)]
             public string Description { get; set; } = string.Empty;
-            
-            [AllowedValues(10, 50, ErrorMessage = "A ticket price can be only 10 or 50")]
+
+            [Range(1, 100, ErrorMessage = "A ticket price must be a whole number between 1 and 100")]
             public int? Price { get; set; }
             
             public int? CategoryId { get; set; }

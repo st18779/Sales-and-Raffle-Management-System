@@ -2,6 +2,8 @@
 **/obj
 **/.vs
 **/.git
+**/.env
+**/.env.*
 
 client/node_modules
 client/.angular

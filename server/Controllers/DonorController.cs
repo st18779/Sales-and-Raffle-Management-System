@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using server.Interfaces;
+using server.Models;
 using server.Services;
 using static server.DTOs.DonorDto;
 
@@ -67,10 +68,13 @@ namespace server.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteDonor(string id)
         {
-                var donor = await _donorService.DeleteDonor(id);
-                if (!donor)
-                    return NotFound(new { message = $"Donor with ID {id} does not exist!" });
-                return Ok("Deleted!");  
+                var result = await _donorService.DeleteDonor(id);
+                return result switch
+                {
+                    DeleteResult.NotFound => NotFound(new { message = $"Donor with ID {id} does not exist!" }),
+                    DeleteResult.InUse => Conflict(new { message = $"Donor with ID {id} has gifts and cannot be deleted." }),
+                    _ => Ok(new { message = "Deleted!" })
+                };
         }
 
         [Authorize(Roles = "Admin")]
