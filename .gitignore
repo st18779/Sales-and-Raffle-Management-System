@@ -2,3 +2,7 @@
 .env
 .env.*
 !.env.example
+CLAUDE.md
+CLAUDE.local.md
+PROJECT_REQUIREMENTS.md
+.claude/
