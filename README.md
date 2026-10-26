@@ -28,12 +28,15 @@ A modern, clean, and fully responsive Chinese-auction (gift raffle) platform. Cu
 
 ## 📸 Screenshots
 
-<img width="1400" alt="Home page" src="docs/screenshots/home.png" />
-<img width="1400" alt="Gift catalog" src="docs/screenshots/catalog.png" />
-<img width="1400" alt="Basket" src="docs/screenshots/basket.png" />
-<img width="1400" alt="Checkout" src="docs/screenshots/checkout.png" />
-<img width="400" alt="Mobile catalog" src="docs/screenshots/mobile-catalog.png" />
-<img width="400" alt="Mobile basket" src="docs/screenshots/mobile-basket.png" />
+<img width="1180" height="1474" alt="home" src="https://github.com/user-attachments/assets/3eba43c3-b4ee-4ce3-a62c-cbb5c1a6d208" />
+
+<img width="2822" height="1524" alt="gift" src="https://github.com/user-attachments/assets/a7ac28a2-0e19-46b8-a363-f9df25242966" />
+
+<img width="2816" height="1508" alt="payment" src="https://github.com/user-attachments/assets/0bf0671b-f68f-432c-836b-5d1eff2f7530" />
+
+<img width="1176" height="1474" alt="mobile gift" src="https://github.com/user-attachments/assets/17beea7e-5a03-4ca3-9365-d5a0c58553eb" />
+
+
 
 ---
 
